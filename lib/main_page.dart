@@ -21,7 +21,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  PageController _controller = PageController(initialPage: 440);
+  final PageController _controller = PageController();
   double i = 0;
 
   // late Timer _timer;
@@ -29,12 +29,15 @@ class _MainPageState extends State<MainPage> {
 
   List<Widget> slide2 = [];
 
+  bool isFooter = false;
+
   @override
   void initState() {
     super.initState();
     getList();
 
     _controller.addListener(() {
+      print(_controller.page);
       setState(() {
         if ((_controller.page! % slide.length).roundToDouble() < slide.length) {
           print((_controller.page! % slide.length).roundToDouble());
@@ -66,93 +69,110 @@ class _MainPageState extends State<MainPage> {
     //print(_controller.offset);
     return Scaffold(
       body: SafeArea(
-          child: Container(
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.only(
-                  left: MediaQuery.of(context).size.width / 30,
-                  right: MediaQuery.of(context).size.width / 30),
-              color: Colors.white,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Expanded(
-                      child: Row(
-                    children: [
-                      Image.asset(
-                        "assets/logo.jpg",
-                        width: 100,
-                        height: 80,
-                      ),
-                    ],
-                  )),
-                  Expanded(
-                    flex: 0,
+          child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.only(
+                left: MediaQuery.of(context).size.width / 30,
+                right: MediaQuery.of(context).size.width / 30),
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        top,
-                      ],
+                  children: [
+                    Image.asset(
+                      "assets/logo.jpg",
+                      width: 100,
+                      height: 80,
                     ),
+                  ],
+                )),
+                Expanded(
+                  flex: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      top,
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            Expanded(
-              flex: 9,
-              child: Stack(
-                children: [
-                  Listener(
-                    onPointerSignal: (event) {
-                      if (event is PointerScrollEvent) {
-                        setState(() {
-                          if (event.scrollDelta.dy < 0) {
-                            _controller.previousPage(
-                                duration: Duration(milliseconds: 300),
-                                curve: Curves.easeIn);
-                          } else {
+          ),
+          Expanded(
+            flex: 9,
+            child: Stack(
+              children: [
+                Listener(
+                  onPointerSignal: (event) {
+                    if (event is PointerScrollEvent) {
+                      setState(() {
+                        if (event.scrollDelta.dy < 0) {
+                          if (i > 0) {
+                            if (isFooter) {
+                              setState(() {
+                                isFooter = false;
+                              });
+                            } else {
+                              _controller.previousPage(
+                                  duration: Duration(milliseconds: 300),
+                                  curve: Curves.easeIn);
+                            }
+                          }
+                        } else {
+                          if (i < 3) {
                             _controller.nextPage(
                                 duration: Duration(milliseconds: 300),
                                 curve: Curves.easeIn);
+                          } else {
+                            setState(() {
+                              isFooter = true;
+                            });
                           }
-                        });
+                        }
+                      });
+                    }
+                  },
+                  child: PageView.builder(
+                    physics: NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    controller: _controller,
+                    itemBuilder: (context, index) {
+                      if (MediaQuery.of(context).size.width < 1440) {
+                        return slide2[index % slide2.length];
+                      } else {
+                        return slide[index % slide.length];
                       }
                     },
-                    child: PageView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      controller: _controller,
-                      itemBuilder: (context, index) {
-                        if (MediaQuery.of(context).size.width < 1440) {
-                          return slide2[index % slide2.length];
-                        } else {
-                          return slide[index % slide.length];
-                        }
-                      },
-                    ),
                   ),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: DotsIndicator(
-                      dotsCount: slide.length,
-                      position: i,
-                      axis: Axis.vertical,
-                      decorator: DotsDecorator(
-                        color: Color(0xFF424749),
-                        activeColor: Color(0xFF025595),
-                      ),
-                      onTap: (pos) {
-                        setState(() => _controller.jumpToPage(pos.toInt()));
-                      },
+                ),
+                Align(
+                  alignment: Alignment.centerRight,
+                  child: DotsIndicator(
+                    dotsCount: slide.length,
+                    position: i,
+                    axis: Axis.vertical,
+                    decorator: DotsDecorator(
+                      color: Color(0xFF424749),
+                      activeColor: Color(0xFF025595),
                     ),
-                  )
-                ],
-              ),
+                    onTap: (pos) {
+                      setState(() => _controller.jumpToPage(pos.toInt()));
+                    },
+                  ),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+          AnimatedContainer(
+            duration: Duration(milliseconds: 500),
+            color: Colors.black45,
+            height: isFooter ? 300 : 0,
+          ),
+        ],
       )),
     );
   }
