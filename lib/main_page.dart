@@ -3,6 +3,7 @@ import "dart:ui";
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mccounting_text/mccounting_text.dart';
@@ -103,23 +104,34 @@ class _MainPageState extends State<MainPage> {
               flex: 9,
               child: Stack(
                 children: [
-                  PageView.builder(
-                    scrollDirection: Axis.vertical,
-                    controller: _controller,
-                    itemBuilder: (context, index) {
-                      // _timer.cancel();
-                      // _timer =
-                      //     Timer.periodic(Duration(seconds: 6), (Timer timer) {
-                      //   _controller.nextPage(
-                      //       duration: Duration(milliseconds: 500),
-                      //       curve: Curves.easeIn);
-                      // });
-                      if (MediaQuery.of(context).size.width < 1440) {
-                        return slide2[index % slide2.length];
-                      } else {
-                        return slide[index % slide.length];
+                  Listener(
+                    onPointerSignal: (event) {
+                      if (event is PointerScrollEvent) {
+                        setState(() {
+                          if (event.scrollDelta.dy < 0) {
+                            _controller.previousPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.easeIn);
+                          } else {
+                            _controller.nextPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.easeIn);
+                          }
+                        });
                       }
                     },
+                    child: PageView.builder(
+                      physics: NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      controller: _controller,
+                      itemBuilder: (context, index) {
+                        if (MediaQuery.of(context).size.width < 1440) {
+                          return slide2[index % slide2.length];
+                        } else {
+                          return slide[index % slide.length];
+                        }
+                      },
+                    ),
                   ),
                   Align(
                     alignment: Alignment.centerRight,
@@ -149,16 +161,16 @@ class _MainPageState extends State<MainPage> {
     var url = Uri.parse('https://jis-company.com/worldcounter_int.php');
 
     slide = [
-      Stack(
-        children: [
-          Expanded(
-            child: Image.asset(
-              "assets/plus_banner.png",
-              fit: BoxFit.cover,
-            ),
+      Container(
+        decoration: BoxDecoration(
+            image: DecorationImage(
+          fit: BoxFit.cover,
+          image: AssetImage(
+            "assets/plus_banner.png",
           ),
-          Positioned(child: Column()),
-        ],
+        )),
+        alignment: Alignment.center,
+        child: Text("asdf"),
       ),
       Container(
         decoration: BoxDecoration(
