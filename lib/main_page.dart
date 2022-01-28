@@ -1,3 +1,4 @@
+import 'dart:async';
 import "dart:ui";
 
 import 'package:animated_text_kit/animated_text_kit.dart';
@@ -22,11 +23,11 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final PageController _controller = PageController();
+  ScrollController scrollController = ScrollController();
   double i = 0;
 
   // late Timer _timer;
   List<Widget> slide = [];
-
   List<Widget> slide2 = [];
 
   bool isFooter = false;
@@ -36,8 +37,23 @@ class _MainPageState extends State<MainPage> {
     super.initState();
     getList();
 
+    scrollController.addListener(() {
+      if (scrollController.offset ==
+          scrollController.position.minScrollExtent) {
+        setState(() {
+          isFooter = false;
+          Timer(
+              Duration(milliseconds: 500),
+              () => scrollController.animateTo(0.0,
+                  duration: Duration(milliseconds: 300),
+                  curve: Curves.easeInOut));
+        });
+      }
+    });
+
     _controller.addListener(() {
       print(_controller.page);
+
       setState(() {
         if ((_controller.page! % slide.length).roundToDouble() < slide.length) {
           print((_controller.page! % slide.length).roundToDouble());
@@ -115,6 +131,11 @@ class _MainPageState extends State<MainPage> {
                             if (isFooter) {
                               setState(() {
                                 isFooter = false;
+                                Timer(
+                                    Duration(milliseconds: 500),
+                                    () => scrollController.animateTo(0,
+                                        duration: Duration(milliseconds: 300),
+                                        curve: Curves.easeInOut));
                               });
                             } else {
                               _controller.previousPage(
@@ -130,6 +151,12 @@ class _MainPageState extends State<MainPage> {
                           } else {
                             setState(() {
                               isFooter = true;
+                              Timer(
+                                  Duration(milliseconds: 500),
+                                  () => scrollController.animateTo(
+                                      scrollController.position.maxScrollExtent,
+                                      duration: Duration(milliseconds: 300),
+                                      curve: Curves.easeInOut));
                             });
                           }
                         }
@@ -137,9 +164,12 @@ class _MainPageState extends State<MainPage> {
                     }
                   },
                   child: PageView.builder(
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: MediaQuery.of(context).size.width < 1400
+                        ? null
+                        : NeverScrollableScrollPhysics(),
                     scrollDirection: Axis.vertical,
                     controller: _controller,
+                    itemCount: 4,
                     itemBuilder: (context, index) {
                       if (MediaQuery.of(context).size.width < 1440) {
                         return slide2[index % slide2.length];
@@ -168,14 +198,13 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           AnimatedContainer(
-            duration: Duration(milliseconds: 500),
-            color: Colors.black45,
-            height: isFooter ? 255 : 0,
-            child: Row(
-              children: [
-                Container(
-                  width: Get.width,
-                  padding: EdgeInsets.all(30),
+              duration: Duration(milliseconds: 500),
+              color: Colors.black45,
+              height: isFooter ? 255 : 0,
+              child: Container(
+                width: Get.width,
+                padding: EdgeInsets.all(30),
+                child: SingleChildScrollView(
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -228,9 +257,7 @@ class _MainPageState extends State<MainPage> {
                     ],
                   ),
                 ),
-              ],
-            ),
-          ),
+              )),
         ],
       )),
     );
@@ -636,74 +663,78 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       Container(
-        decoration: BoxDecoration(
-          color: Colors.white,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                McCountingText(
-                  begin: 10,
-                  end: 1000,
+        color: Colors.white,
+        child: SingleChildScrollView(
+          controller: scrollController,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  McCountingText(
+                    begin: 10,
+                    end: 1000,
+                    style: TextStyle(
+                        fontSize: 70,
+                        fontFamily: 'Jalnan',
+                        color: Color(0xFf025595)),
+                    duration: Duration(seconds: 2),
+                    curve: Curves.decelerate,
+                  ),
+                  Text(
+                    '+',
+                    style: TextStyle(
+                        color: Color(0xFF025595),
+                        fontSize: 70,
+                        fontFamily: 'Jalnan'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              Container(
+                child: Text(
+                  '누적 다운로드 수',
                   style: TextStyle(
-                      fontSize: 70,
-                      fontFamily: 'Jalnan',
-                      color: Color(0xFf025595)),
-                  duration: Duration(seconds: 2),
-                  curve: Curves.decelerate,
-                ),
-                Text(
-                  '+',
-                  style: TextStyle(
-                      color: Color(0xFF025595),
-                      fontSize: 70,
-                      fontFamily: 'Jalnan'),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Container(
-              child: Text(
-                '누적 다운로드 수',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.black,
-                  fontFamily: 'NanumSquareEB',
+                    fontSize: 25,
+                    color: Colors.black,
+                    fontFamily: 'NanumSquareEB',
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 30),
-            Container(
-              child: Image.asset('assets/download.png'),
-            ),
-            SizedBox(height: 30),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                width: 180,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xFF025595),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
-                  child: Text(
-                    '다운로드 하러가기',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'NanumSquareB',
+              SizedBox(height: 30),
+              Container(
+                child: Image.asset('assets/download.png'),
+              ),
+              SizedBox(height: 30),
+              InkWell(
+                onTap: () {},
+                child: Container(
+                  width: 180,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Color(0xFF025595),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Center(
+                    child: Text(
+                      '다운로드 하러가기',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontFamily: 'NanumSquareB',
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+              SizedBox(
+                height: 10,
+              ),
+            ],
+          ),
         ),
       ),
     ];
@@ -819,381 +850,398 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
-      Container(
-        child: Stack(
-          children: [
-            Column(
+      Stack(
+        children: [
+          Column(
+            children: [
+              Expanded(
+                child: Container(
+                  color: Color(0xFF025595),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  color: Color(0xffffffff),
+                ),
+              ),
+            ],
+          ),
+          Container(
+            padding: EdgeInsets.only(top: 50, left: 10),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                  child: Container(
-                    color: Color(0xFF025595),
+                Text(
+                  '어디에도 없는',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontFamily: 'NanumSquareEB',
                   ),
                 ),
-                Expanded(
-                  child: Container(
-                    color: Color(0xffffffff),
+                SizedBox(height: 10),
+                Text(
+                  '홈케어 올인원 서비스 +',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 25,
+                    fontFamily: 'NanumSquareEB',
                   ),
                 ),
               ],
             ),
-            Container(
-              padding: EdgeInsets.only(top: 50, left: 10),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    '어디에도 없는',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontFamily: 'NanumSquareEB',
-                    ),
+          ),
+          Positioned(
+            top: 180,
+            right: 5,
+            left: 5,
+            child: Row(
+              children: [
+                Container(
+                  width: 180,
+                  height: 220,
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
                   ),
-                  SizedBox(height: 10),
-                  Text(
-                    '홈케어 올인원 서비스 +',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 25,
-                      fontFamily: 'NanumSquareEB',
-                    ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              '전문가 매칭',
+                              style: TextStyle(
+                                color: Color(0xFf025595),
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '서비스',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '원하시는 서비스 견적신청을 해주시면 견적서에 맞춰 파트너를 매칭/추천 해드립니다.',
+                        style: TextStyle(
+                          height: 1.5,
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareR',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: 180,
-              right: 5,
-              left: 5,
-              child: Container(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 180,
-                      height: 220,
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 10),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '전문가 매칭',
-                                  style: TextStyle(
-                                    color: Color(0xFf025595),
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  '서비스',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            '원하시는 서비스 견적신청을 해주시면 견적서에 맞춰 파트너를 매칭/추천 해드립니다.',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 10,
-                              fontFamily: 'NanumSquareR',
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 180,
-                      height: 220,
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 10),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '올인원 케어',
-                                  style: TextStyle(
-                                    color: Color(0xFf025595),
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  '서비스',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            '청소, 인테리어, 렌탈 서비스 등등 복잡한 과정들을 한 번에 입주플러스에서 해결하세요!',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 10,
-                              fontFamily: 'NanumSquareR',
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
                 ),
-              ),
-            ),
-            Positioned(
-              top: 430,
-              right: 5,
-              left: 5,
-              child: Container(
-                child: Row(
-                  children: [
-                    Container(
-                      width: 180,
-                      height: 220,
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(20),
+                SizedBox(width: 10),
+                Container(
+                  width: 180,
+                  height: 220,
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 10),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '합리적 금액',
-                                  style: TextStyle(
-                                    color: Color(0xFf025595),
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  '서비스',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              '올인원 케어',
+                              style: TextStyle(
+                                color: Color(0xFf025595),
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            '입주플러스 파트너들은 합리적인  가격으로 예상견적을 보내드립니다.',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 10,
-                              fontFamily: 'NanumSquareR',
+                            SizedBox(width: 5),
+                            Text(
+                              '서비스',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
                             ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                    SizedBox(width: 10),
-                    Container(
-                      width: 180,
-                      height: 220,
-                      padding: EdgeInsets.only(left: 10, right: 10),
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey.withOpacity(0.5),
-                            spreadRadius: 3,
-                            blurRadius: 7,
-                            offset: Offset(0, 3), // changes position of shadow
-                          ),
-                        ],
-                        borderRadius: BorderRadius.circular(20),
+                      SizedBox(height: 10),
+                      Text(
+                        '청소, 인테리어, 렌탈 서비스 등등 복잡한 과정들을 한 번에 입주플러스에서 해결하세요!',
+                        style: TextStyle(
+                          height: 1.5,
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareR',
+                        ),
+                        textAlign: TextAlign.center,
                       ),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          SizedBox(height: 10),
-                          Container(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  '예상 견적',
-                                  style: TextStyle(
-                                    color: Color(0xFf025595),
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                                SizedBox(width: 5),
-                                Text(
-                                  '서비스',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontFamily: 'NanumSquareEB',
-                                    fontSize: 20,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                            '파트너들의 예상 견적 서비스를 상담 전에 한 번에 받아 보세요!',
-                            style: TextStyle(
-                              height: 1.5,
-                              fontSize: 10,
-                              fontFamily: 'NanumSquareR',
-                            ),
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+          Positioned(
+            top: 430,
+            right: 5,
+            left: 5,
+            child: Row(
+              children: [
+                Container(
+                  width: 180,
+                  height: 220,
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              '합리적 금액',
+                              style: TextStyle(
+                                color: Color(0xFf025595),
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '서비스',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '입주플러스 파트너들은 합리적인  가격으로 예상견적을 보내드립니다.',
+                        style: TextStyle(
+                          height: 1.5,
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareR',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10),
+                Container(
+                  width: 180,
+                  height: 220,
+                  padding: EdgeInsets.only(left: 10, right: 10),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 7,
+                        offset: Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      SizedBox(height: 10),
+                      Container(
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Text(
+                              '예상 견적',
+                              style: TextStyle(
+                                color: Color(0xFf025595),
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
+                            ),
+                            SizedBox(width: 5),
+                            Text(
+                              '서비스',
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontFamily: 'NanumSquareEB',
+                                fontSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        '파트너들의 예상 견적 서비스를 상담 전에 한 번에 받아 보세요!',
+                        style: TextStyle(
+                          height: 1.5,
+                          fontSize: 10,
+                          fontFamily: 'NanumSquareR',
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
-      Container(
-        decoration: BoxDecoration(
+      GestureDetector(
+        onVerticalDragUpdate: (detail) {
+          print(detail);
+          if (detail.delta.dy < 0) {
+            setState(() {
+              isFooter = true;
+              Timer(
+                  Duration(milliseconds: 500),
+                  () => scrollController.animateTo(
+                      scrollController.position.maxScrollExtent,
+                      duration: Duration(milliseconds: 300),
+                      curve: Curves.easeInOut));
+            });
+          } else {
+            _controller.animateToPage(2,
+                duration: Duration(milliseconds: 500), curve: Curves.easeInOut);
+          }
+        },
+        child: Container(
           color: Colors.white,
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Row(
+          child: SingleChildScrollView(
+            controller: scrollController,
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                McCountingText(
-                  begin: 10,
-                  end: 1000,
-                  style: TextStyle(
-                      fontSize: 60,
-                      fontFamily: 'Jalnan',
-                      color: Color(0xFf025595)),
-                  duration: Duration(seconds: 2),
-                  curve: Curves.decelerate,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    McCountingText(
+                      begin: 10,
+                      end: 1000,
+                      style: TextStyle(
+                          fontSize: 60,
+                          fontFamily: 'Jalnan',
+                          color: Color(0xFf025595)),
+                      duration: Duration(seconds: 2),
+                      curve: Curves.decelerate,
+                    ),
+                    Text(
+                      '+',
+                      style: TextStyle(
+                          color: Color(0xFF025595),
+                          fontSize: 60,
+                          fontFamily: 'Jalnan'),
+                    ),
+                  ],
                 ),
-                Text(
-                  '+',
-                  style: TextStyle(
-                      color: Color(0xFF025595),
-                      fontSize: 60,
-                      fontFamily: 'Jalnan'),
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
-            Container(
-              child: Text(
-                '누적 다운로드 수',
-                style: TextStyle(
-                  fontSize: 23,
-                  color: Colors.black,
-                  fontFamily: 'NanumSquareEB',
-                ),
-              ),
-            ),
-            SizedBox(height: 40),
-            Container(
-              child: Image.asset('assets/download.png'),
-            ),
-            SizedBox(height: 40),
-            InkWell(
-              onTap: () {},
-              child: Container(
-                width: 180,
-                height: 50,
-                decoration: BoxDecoration(
-                  color: Color(0xFF025595),
-                  borderRadius: BorderRadius.circular(5),
-                ),
-                child: Center(
+                SizedBox(height: 20),
+                Container(
                   child: Text(
-                    '다운로드 하러가기',
+                    '누적 다운로드 수',
                     style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontFamily: 'NanumSquareB',
+                      fontSize: 23,
+                      color: Colors.black,
+                      fontFamily: 'NanumSquareEB',
                     ),
                   ),
                 ),
-              ),
+                SizedBox(height: 40),
+                Container(
+                  child: Image.asset('assets/download.png'),
+                ),
+                SizedBox(height: 40),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: 180,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF025595),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '다운로드 하러가기',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontFamily: 'NanumSquareB',
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
-          ],
+          ),
         ),
       ),
     ];
