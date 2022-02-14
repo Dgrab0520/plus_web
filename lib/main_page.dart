@@ -185,7 +185,9 @@ class _MainPageState extends State<MainPage> {
                           )),
                       SizedBox(height: 30),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Get.to(AdminMainPage());
+                        },
                         child: Container(
                           width: 130,
                           height: 35,
@@ -257,8 +259,12 @@ class _MainPageState extends State<MainPage> {
       ),
       Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-        ),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(
+                "assets/img6.jpg",
+              ),
+            )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -726,8 +732,12 @@ class _MainPageState extends State<MainPage> {
       ),
       Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-        ),
+            image: DecorationImage(
+              fit: BoxFit.cover,
+              image: AssetImage(
+                "assets/img6.jpg",
+              ),
+            )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
