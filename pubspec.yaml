@@ -39,6 +39,9 @@ dependencies:
   dots_indicator: ^2.0.0
   animated_text_kit: ^4.2.1
   mccounting_text: ^1.0.0
+  radio_group_v2: ^1.0.2
+  dropdown_button2: ^1.0.7
+  syncfusion_flutter_charts: ^19.4.43
 
 
 dev_dependencies:
