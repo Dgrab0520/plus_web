@@ -8,13 +8,6 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mccounting_text/mccounting_text.dart';
 
-TextEditingController nameController = TextEditingController();
-TextEditingController emailController = TextEditingController();
-TextEditingController commentController = TextEditingController();
-TextEditingController urlController = TextEditingController();
-
-late Widget top;
-
 class MainPage extends StatefulWidget {
   @override
   _MainPageState createState() => _MainPageState();
@@ -33,43 +26,10 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
     getList();
-
-    _controller.addListener(() {
-      print(_controller.position.userScrollDirection);
-      if (_controller.position.userScrollDirection == ScrollDirection.forward) {
-        if (_controller.page! > 0) {
-          if (_controller.page! > 2 && isFooter) {
-            setState(() {
-              isFooter = false;
-            });
-          }
-        }
-      } else {
-        if (_controller.page! == 3 && !isFooter) {
-          setState(() {
-            isFooter = true;
-          });
-        }
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 920) {
-      top = Container(
-        margin: EdgeInsets.only(bottom: 20.0),
-        child: Row(
-          children: [],
-        ),
-      );
-    } else {
-      top = Row(
-        children: [],
-      );
-    }
-    printError();
-    //print(_controller.offset);
     return Scaffold(
       body: SafeArea(
           child: Column(
@@ -79,30 +39,11 @@ class _MainPageState extends State<MainPage> {
                 left: MediaQuery.of(context).size.width / 30,
                 right: MediaQuery.of(context).size.width / 30),
             color: Colors.white,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(
-                    child: Row(
-                  children: [
-                    Image.asset(
-                      "assets/logo.jpg",
-                      width: 100,
-                      height: 80,
-                    ),
-                  ],
-                )),
-                Expanded(
-                  flex: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      top,
-                    ],
-                  ),
-                ),
-              ],
+            alignment: Alignment.centerLeft,
+            child: Image.asset(
+              "assets/logo.jpg",
+              width: 100,
+              height: 80,
             ),
           ),
           Expanded(
@@ -110,7 +51,7 @@ class _MainPageState extends State<MainPage> {
             child: Listener(
               onPointerSignal: (event) {
                 if (event is PointerScrollEvent) {
-                  print(event.scrollDelta..dy);
+                  print(event);
                   setState(() {
                     if (event.scrollDelta.dy < 0) {
                       if (_controller.page! > 0) {
@@ -136,6 +77,23 @@ class _MainPageState extends State<MainPage> {
                       }
                     }
                   });
+                }
+              },
+              onPointerMove: (event) {
+                print(event.delta.direction);
+                if (event.delta.direction < 0) {
+                  if (_controller.page! == 3 && !isFooter) {
+                    setState(() {
+                      isFooter = true;
+                    });
+                  }
+                } else {
+                  if (_controller.page! == 3 && isFooter) {
+                    _controller.jumpToPage(3);
+                    setState(() {
+                      isFooter = false;
+                    });
+                  }
                 }
               },
               child: PageView.builder(
