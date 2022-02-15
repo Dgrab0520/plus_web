@@ -1,8 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plus_web/admin/admini_main_page.dart';
 import 'package:plus_web/admin/signup_page.dart';
-
-import 'admini_main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -157,7 +157,7 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 30),
                     InkWell(
                       onTap: () {
-                        Get.to(AdminMainPage());
+                        Get.to(AdminPage());
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
