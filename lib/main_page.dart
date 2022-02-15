@@ -186,7 +186,7 @@ class _MainPageState extends State<MainPage> {
                       SizedBox(height: 30),
                       InkWell(
                         onTap: () {
-                          Get.to(AdminMainPage());
+                          Get.to(AdminPage());
                         },
                         child: Container(
                           width: 130,
@@ -335,7 +335,7 @@ class _MainPageState extends State<MainPage> {
                 color: Color(0xFF025595),
                 child: Container(
                   width:Get.width,
-                  padding: EdgeInsets.only(top:50,bottom:50,left:20,right:20),
+                  padding: EdgeInsets.only(top:50,),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -414,7 +414,7 @@ class _MainPageState extends State<MainPage> {
                                   ),
                                   SizedBox(height: 10),
                                   Text(
-                                    '원하시는 서비스 견적신청을 해주시면 견적서에 맞춰 파트너를 매칭/추천 해드립니다.',
+                                    '원하시는 서비스 견적신청을 해주시면 견적서에 맞춰 파트너를 매칭 또는 추천 해드립니다.',
                                     style: TextStyle(
                                       height: 1.5,
                                       fontSize: 13,
@@ -900,7 +900,7 @@ class _MainPageState extends State<MainPage> {
                                   ),
                                   SizedBox(height: 10),
                                   Text(
-                                    '원하시는 서비스 견적 신청을 해주시면 견적서에 맞춰 파트너를 매칭/추천 해드립니다.',
+                                    '원하시는 서비스 견적 신청을 해주시면 견적서에 맞춰 파트너를 매칭 또는 추천 해드립니다.',
                                     style: TextStyle(
                                       height: 1.5,
                                       fontSize: 12,

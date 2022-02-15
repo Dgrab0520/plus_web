@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:plus_web/admin/admini_main_page.dart';
 import 'package:plus_web/admin/partner_page.dart';
 import 'package:plus_web/admin/setting_page.dart';
 import 'package:radio_group_v2/radio_group_v2.dart';
-
-import 'admini_main_page.dart';
 
 
 late Widget top;
@@ -77,7 +76,7 @@ class _PointPageState extends State<PointPage> {
               Container(
                 alignment : Alignment.center,
                 margin: EdgeInsets.only(left: 15, right: 15),
-                width: 350,
+                width: 150,
                 height: 43,
                 decoration: BoxDecoration(
                   color: Color(0xFFF9F9F9),
@@ -169,7 +168,7 @@ class _PointPageState extends State<PointPage> {
                       Expanded(
                           child: InkWell(
                             onTap:(){
-                              Get.to(AdminMainPage());
+                              Get.to(AdminPage());
                             },
                             child: Text(
                               '관리자 페이지',
@@ -207,27 +206,31 @@ class _PointPageState extends State<PointPage> {
                           child: Row(
                             children: [
                               InkWell(
-                                onTap:(){},
+                                onTap:(){
+                                  Get.to(AdminPage());
+                                },
                                 child: Container(
-                                  padding: EdgeInsets.all(15),
-                                  margin: EdgeInsets.only(top:1,bottom:1),
+                                  padding: EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
-                                    color:Colors.white,
+                                    color:Color(0xFF3B4E84),
                                   ),
                                   child: Center(
                                     child: Text('고객관리',
                                       style: TextStyle(
                                         fontSize:16,
-                                        fontFamily: 'NanumSquareB',
+                                        fontFamily: 'NanumSquareR',
+                                        color:Colors.white,
                                       ),
                                     ),
                                   ),
                                 ),
                               ),
                               InkWell(
-                                onTap:(){},
+                                onTap:(){
+                                  Get.to(PartnerPage());
+                                },
                                 child: Container(
-                                  padding: EdgeInsets.all(15.0),
+                                  padding: EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
                                     color:Color(0xFF3B4E84),
                                   ),
@@ -243,18 +246,20 @@ class _PointPageState extends State<PointPage> {
                                 ),
                               ),
                               InkWell(
-                                onTap:(){},
+                                onTap:(){
+                                  Get.to(PointPage());
+                                },
                                 child: Container(
-                                  padding: EdgeInsets.all(15.0),
+                                  padding: EdgeInsets.all(10),
+                                  margin: EdgeInsets.only(top:1,bottom:1),
                                   decoration: BoxDecoration(
-                                    color:Color(0xFF3B4E84),
+                                    color:Colors.white,
                                   ),
                                   child: Center(
                                     child: Text('포인트 관리',
                                       style: TextStyle(
                                         fontSize:16,
-                                        fontFamily: 'NanumSquareR',
-                                        color:Colors.white,
+                                        fontFamily: 'NanumSquareB',
                                       ),
                                     ),
                                   ),
@@ -265,7 +270,7 @@ class _PointPageState extends State<PointPage> {
                                   Get.to(SettingPage());
                                 },
                                 child: Container(
-                                  padding: EdgeInsets.all(15.0),
+                                  padding: EdgeInsets.all(10.0),
                                   decoration: BoxDecoration(
                                     color:Color(0xFF3B4E84),
                                   ),
@@ -293,7 +298,7 @@ class _PointPageState extends State<PointPage> {
                             top: MediaQuery.of(context).size.width / 70,
                             bottom: MediaQuery.of(context).size.width / 70,
                           ),
-                          child: Text('고객 회원 관리',
+                          child: Text('포인트 관리',
                             style:TextStyle(
                               fontFamily: 'NanumSquareEB',
                               fontSize:18,
@@ -322,7 +327,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('기간',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -353,7 +358,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('전체 회원 수',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -384,7 +389,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('회원가입',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -415,7 +420,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('회원탈퇴',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -457,7 +462,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('2021년 7월',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -484,7 +489,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('40,789명',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -511,7 +516,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('120명',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -538,7 +543,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('13명',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -561,266 +566,263 @@ class _PointPageState extends State<PointPage> {
                             decoration: BoxDecoration(
                               color:Color(0xFFD8DCE6),
                             ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            child: ListView(
+                              scrollDirection: Axis.horizontal,
                               children: [
+                                Container(
+                                  padding:EdgeInsets.all(10),
+                                  decoration: BoxDecoration(
+                                      color:Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        width:1,
+                                        color:Color(0xFFcccccc),
+                                      )
+                                  ),
+                                  child: Center(
+                                    child: Text('통합검색',
+                                      style:TextStyle(
+                                        fontSize:12,
+                                        fontFamily: 'NanumSquareB',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Container(
+                                  alignment : Alignment.center,
+                                  margin: EdgeInsets.only(left: 5, right: 15),
+                                  width: 100,
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Color(0xFFffffff),
+                                    border: Border.all(
+                                      width: 1.0,
+                                      color: Color(0xFFcccccc),
+                                    ),
+                                    borderRadius: BorderRadius.circular(5),
+                                  ),
+                                  child: TextField(
+                                    keyboardType: TextInputType.text,
+                                    onChanged: (text) { },
+                                    decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.only(
+                                        bottom: 8,
+                                        left:5,// HERE THE IMPORTANT PART
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width:10),
+                                Container(
+                                  width:60,
+                                  height:40,
+                                  decoration: BoxDecoration(
+                                      color:Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        width:1,
+                                        color:Color(0xFFcccccc),
+                                      )
+                                  ),
+                                  child: Center(
+                                    child: Text('이용횟수',
+                                      style:TextStyle(
+                                        fontSize:12,
+                                        fontFamily: 'NanumSquareB',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width:5),
+                                Container(
+                                  width: 100,
+                                  height: 40,
+                                  decoration:BoxDecoration(
+                                      color:Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                      border:Border.all(
+                                        width:1,
+                                        color:Color(0xFFcccccc),
+                                      )
+                                  ),
+                                  child: Form(
+                                    key: _formKey,
+                                    child: DropdownButtonFormField2(
+                                      decoration: InputDecoration(
+                                        contentPadding: EdgeInsets.zero,
+                                        border: InputBorder.none,
+                                        //Add more decoration as you want here
+                                        //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
+                                      ),
+                                      isExpanded: true,
+                                      hint: Row(
+                                        children: [
+                                          Text(
+                                            '전체',
+                                            style: TextStyle(
+                                              fontSize: 12,
+                                              color:Colors.black,
+                                              fontFamily: 'NanumSquareR',
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      icon: const Icon(
+                                        Icons.arrow_drop_down,
+                                        color: Color(0xFFcccccc),
+                                      ),
+                                      iconSize: 30,
+                                      buttonHeight: 45,
+                                      buttonPadding: const EdgeInsets.only(left: 20, right: 10,bottom:10),
+                                      dropdownDecoration: BoxDecoration(
+                                        color:Colors.white,
+                                      ),
+                                      items: map
+                                          .map((item) => DropdownMenuItem<String>(
+                                        value: item,
+                                        child: Text(
+                                          item,
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                          ),
+                                        ),
+                                      ))
+                                          .toList(),
+                                      validator: (value) {
+                                        if (value == null) {
+                                          return '지역을 골라주세요.';
+                                        }
+                                      },
+                                      onChanged: (value) {
+                                        if (value == "글쓰기") {
+
+                                        } else if (value == "구독정보") {
+
+                                        }
+                                        //Do something when changing the item if you want.
+                                      },
+                                      onSaved: (value) {
+                                        selectedValue = value.toString();
+                                      },
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width:25),
+                                Container(
+                                  width:60,
+                                  height:40,
+                                  decoration: BoxDecoration(
+                                      color:Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        width:1,
+                                        color:Color(0xFFcccccc),
+                                      )
+                                  ),
+                                  child: Center(
+                                    child: Text('회원상태',
+                                      style:TextStyle(
+                                        fontSize:12,
+                                        fontFamily: 'NanumSquareB',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
+                                SizedBox(width:5),
+
+                                RadioGroup(
+                                  controller: myController,
+                                  values: ["전체", "남자", "여자"],
+                                  indexOfDefault: 0,
+                                  orientation: RadioGroupOrientation.Horizontal,
+                                  decoration: RadioGroupDecoration(
+                                    spacing: 4.0,
+                                    labelStyle: TextStyle(
+                                      color: Colors.black,
+                                    ),
+                                    activeColor: Color(0xFF3B4E84),
+                                  ),
+                                ),
+                                SizedBox(width:15),
+
+                                Container(
+                                  width:60,
+                                  height:40,
+                                  decoration: BoxDecoration(
+                                      color:Colors.white,
+                                      borderRadius: BorderRadius.circular(5),
+                                      border: Border.all(
+                                        width:1,
+                                        color:Color(0xFFcccccc),
+                                      )
+                                  ),
+                                  child: Center(
+                                    child: Text('가입일',
+                                      style:TextStyle(
+                                        fontSize:12,
+                                        fontFamily: 'NanumSquareB',
+                                      ),
+                                    ),
+                                  ),
+                                ),
+
                                 Row(
                                   children: [
                                     Container(
-                                      width:80,
-                                      height:40,
-                                      decoration: BoxDecoration(
-                                          color:Colors.white,
-                                          borderRadius: BorderRadius.circular(5),
-                                          border: Border.all(
-                                            width:1,
-                                            color:Color(0xFFcccccc),
-                                          )
-                                      ),
-                                      child: Center(
-                                        child: Text('통합검색',
-                                          style:TextStyle(
-                                            fontSize:13,
-                                            fontFamily: 'NanumSquareB',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Container(
-                                      alignment : Alignment.center,
-                                      margin: EdgeInsets.only(left: 5, right: 15),
-                                      width: 150,
-                                      height: 40,
-                                      decoration: BoxDecoration(
-                                        color: Color(0xFFffffff),
-                                        border: Border.all(
-                                          width: 1.0,
-                                          color: Color(0xFFcccccc),
-                                        ),
-                                        borderRadius: BorderRadius.circular(5),
-                                      ),
-                                      child: TextField(
-                                        keyboardType: TextInputType.text,
-                                        onChanged: (text) { },
-                                        decoration: InputDecoration(
-                                          border: InputBorder.none,
-                                          contentPadding: EdgeInsets.only(
-                                            bottom: 8,
-                                            left:5,// HERE THE IMPORTANT PART
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width:10),
-                                    Container(
-                                      width:80,
-                                      height:40,
-                                      decoration: BoxDecoration(
-                                          color:Colors.white,
-                                          borderRadius: BorderRadius.circular(5),
-                                          border: Border.all(
-                                            width:1,
-                                            color:Color(0xFFcccccc),
-                                          )
-                                      ),
-                                      child: Center(
-                                        child: Text('이용횟수',
-                                          style:TextStyle(
-                                            fontSize:13,
-                                            fontFamily: 'NanumSquareB',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width:5),
-                                    Container(
-                                      width: 120,
-                                      height: 40,
-                                      decoration:BoxDecoration(
-                                          color:Colors.white,
-                                          borderRadius: BorderRadius.circular(5),
-                                          border:Border.all(
-                                            width:1,
-                                            color:Color(0xFFcccccc),
-                                          )
-                                      ),
-                                      child: Form(
-                                        key: _formKey,
-                                        child: DropdownButtonFormField2(
-                                          decoration: InputDecoration(
-                                            contentPadding: EdgeInsets.zero,
-                                            border: InputBorder.none,
-                                            //Add more decoration as you want here
-                                            //Add label If you want but add hint outside the decoration to be aligned in the button perfectly.
-                                          ),
-                                          isExpanded: true,
-                                          hint: Row(
-                                            children: [
-                                              Text(
-                                                '전체',
-                                                style: TextStyle(
-                                                  fontSize: 12,
-                                                  color:Colors.black,
-                                                  fontFamily: 'NanumSquareR',
+                                      padding: EdgeInsets.symmetric(horizontal: 20.0),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          InkWell(
+                                            onTap: () => _selectDate(context),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: <Widget>[
+                                                Container(
+                                                  child: Icon(Icons.calendar_today, color:Color(0xFF025595), size:17,),
                                                 ),
-                                              ),
-                                            ],
+                                                SizedBox(
+                                                  width: 15.0,
+                                                ),
+                                                Text(
+                                                  "${selectedDate.toLocal()}".split(' ')[0],
+                                                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                                ),
+                                              ],
+                                            ),
                                           ),
-                                          icon: const Icon(
-                                            Icons.arrow_drop_down,
-                                            color: Color(0xFFcccccc),
-                                          ),
-                                          iconSize: 30,
-                                          buttonHeight: 45,
-                                          buttonPadding: const EdgeInsets.only(left: 20, right: 10,bottom:10),
-                                          dropdownDecoration: BoxDecoration(
-                                            color:Colors.white,
-                                          ),
-                                          items: map
-                                              .map((item) => DropdownMenuItem<String>(
-                                            value: item,
-                                            child: Text(
-                                              item,
-                                              style: const TextStyle(
-                                                fontSize: 13,
+
+                                          SizedBox(width: 20.0,),
+
+                                          Text('~'),
+
+                                          SizedBox(width: 20.0,),
+
+                                          InkWell(
+                                            onTap: () => _selectDate2(context),
+                                            child: Container(
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: <Widget>[
+                                                  Container(
+                                                    child: Icon(Icons.calendar_today, color:Color(0xFF025595), size:12,),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 15.0,
+                                                  ),
+                                                  Text(
+                                                    "${selectedDate2.toLocal()}".split(' ')[0],
+                                                    style: TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+                                                  ),
+                                                ],
                                               ),
                                             ),
-                                          ))
-                                              .toList(),
-                                          validator: (value) {
-                                            if (value == null) {
-                                              return '지역을 골라주세요.';
-                                            }
-                                          },
-                                          onChanged: (value) {
-                                            if (value == "글쓰기") {
-
-                                            } else if (value == "구독정보") {
-
-                                            }
-                                            //Do something when changing the item if you want.
-                                          },
-                                          onSaved: (value) {
-                                            selectedValue = value.toString();
-                                          },
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width:25),
-                                    Container(
-                                      width:80,
-                                      height:40,
-                                      decoration: BoxDecoration(
-                                          color:Colors.white,
-                                          borderRadius: BorderRadius.circular(5),
-                                          border: Border.all(
-                                            width:1,
-                                            color:Color(0xFFcccccc),
-                                          )
-                                      ),
-                                      child: Center(
-                                        child: Text('회원상태',
-                                          style:TextStyle(
-                                            fontSize:13,
-                                            fontFamily: 'NanumSquareB',
                                           ),
-                                        ),
+
+                                        ],
                                       ),
-                                    ),
-
-                                    SizedBox(width:5),
-
-                                    RadioGroup(
-                                      controller: myController,
-                                      values: ["전체", "남자", "여자"],
-                                      indexOfDefault: 0,
-                                      orientation: RadioGroupOrientation.Horizontal,
-                                      decoration: RadioGroupDecoration(
-                                        spacing: 5.0,
-                                        labelStyle: TextStyle(
-                                          color: Colors.black,
-                                        ),
-                                        activeColor: Color(0xFF3B4E84),
-                                      ),
-                                    ),
-                                    SizedBox(width:15),
-
-                                    Container(
-                                      width:60,
-                                      height:40,
-                                      decoration: BoxDecoration(
-                                          color:Colors.white,
-                                          borderRadius: BorderRadius.circular(5),
-                                          border: Border.all(
-                                            width:1,
-                                            color:Color(0xFFcccccc),
-                                          )
-                                      ),
-                                      child: Center(
-                                        child: Text('가입일',
-                                          style:TextStyle(
-                                            fontSize:13,
-                                            fontFamily: 'NanumSquareB',
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-
-                                    Row(
-                                      children: [
-                                        Container(
-                                          padding: EdgeInsets.symmetric(horizontal: 20.0),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              InkWell(
-                                                onTap: () => _selectDate(context),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      child: Icon(Icons.calendar_today, color:Color(0xFF025595), size:17,),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 15.0,
-                                                    ),
-                                                    Text(
-                                                      "${selectedDate.toLocal()}".split(' ')[0],
-                                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-                                              SizedBox(width: 20.0,),
-
-                                              Text('~'),
-
-                                              SizedBox(width: 20.0,),
-
-                                              InkWell(
-                                                onTap: () => _selectDate2(context),
-                                                child: Row(
-                                                  mainAxisSize: MainAxisSize.min,
-                                                  children: <Widget>[
-                                                    Container(
-                                                      child: Icon(Icons.calendar_today, color:Color(0xFF025595), size:17,),
-                                                    ),
-                                                    SizedBox(
-                                                      width: 15.0,
-                                                    ),
-                                                    Text(
-                                                      "${selectedDate2.toLocal()}".split(' ')[0],
-                                                      style: TextStyle(fontSize: 15, fontWeight: FontWeight.bold),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-
-                                            ],
-                                          ),
-                                        ),
-                                      ],
                                     ),
                                   ],
                                 ),
@@ -829,8 +831,8 @@ class _PointPageState extends State<PointPage> {
                                     InkWell(
                                       onTap:(){},
                                       child: Container(
-                                        width:60,
-                                        height:40,
+                                        width:50,
+                                        height:25,
                                         decoration:BoxDecoration(
                                           color:Color(0xFF506AB4),
                                           borderRadius: BorderRadius.circular(5),
@@ -840,7 +842,7 @@ class _PointPageState extends State<PointPage> {
                                               style:TextStyle(
                                                 color:Colors.white,
                                                 fontFamily: 'NanumSquareR',
-                                                fontSize:14,
+                                                fontSize:12,
                                               )
                                           ),
                                         ),
@@ -853,7 +855,7 @@ class _PointPageState extends State<PointPage> {
                                       },
                                       child: Container(
                                         width:100,
-                                        height:40,
+                                        height:25,
                                         decoration:BoxDecoration(
                                           color:Color(0xFF506AB4),
                                           borderRadius: BorderRadius.circular(5),
@@ -863,7 +865,7 @@ class _PointPageState extends State<PointPage> {
                                               style:TextStyle(
                                                 color:Colors.white,
                                                 fontFamily: 'NanumSquareR',
-                                                fontSize:14,
+                                                fontSize:12,
                                               )
                                           ),
                                         ),
@@ -899,7 +901,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('번호',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -931,7 +933,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('이름',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -963,7 +965,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('휴대폰번호',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -995,7 +997,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('예약횟수',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -1027,7 +1029,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('성별',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -1059,7 +1061,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('가입일',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -1091,7 +1093,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('관리',
                                       style:TextStyle(
-                                        fontSize:16,
+                                        fontSize:14,
                                         fontFamily: 'NanumSquareB',
                                       ),
                                     ),
@@ -1134,7 +1136,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('10',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -1162,7 +1164,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('김성수',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -1190,7 +1192,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('010-5555-4444',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -1218,7 +1220,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('22',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -1246,7 +1248,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('여자',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -1274,7 +1276,7 @@ class _PointPageState extends State<PointPage> {
                                   child: Center(
                                     child: Text('2022-01-01',
                                       style:TextStyle(
-                                        fontSize:15,
+                                        fontSize:12,
                                         fontFamily: 'NanumSquareR',
                                       ),
                                     ),
@@ -1307,33 +1309,33 @@ class _PointPageState extends State<PointPage> {
                                         InkWell(
                                           onTap:(){},
                                           child: Container(
-                                            width:70,
-                                            height:30,
+                                            width:25,
+                                            height:20,
                                             decoration:BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5),
                                                 color:Color(0xFF656565)
                                             ),
                                             child: Center(child: Text('수정',
                                               style:TextStyle(
-                                                fontSize:14,
+                                                fontSize:9,
                                                 color:Colors.white,
                                               ),
                                             )),
                                           ),
                                         ),
-                                        SizedBox(width:10),
+                                        SizedBox(width:5),
                                         InkWell(
                                           onTap:(){},
                                           child: Container(
-                                            width:70,
-                                            height:30,
+                                            width:25,
+                                            height:20,
                                             decoration:BoxDecoration(
                                                 borderRadius: BorderRadius.circular(5),
                                                 color:Color(0xFF656565)
                                             ),
                                             child: Center(child: Text('삭제',
                                               style: TextStyle(
-                                                fontSize:14,
+                                                fontSize:10,
                                                 color:Colors.white,
                                               ),
                                             )),
@@ -1363,7 +1365,7 @@ class _PointPageState extends State<PointPage> {
                             children: [
                               InkWell(
                                 onTap:(){
-                                  Get.to(AdminMainPage());
+                                  Get.to(AdminPage());
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(15.0),
