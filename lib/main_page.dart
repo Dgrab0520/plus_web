@@ -336,7 +336,7 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           children: [
             Container(
-              width:Get.width,
+              width:2000,
               height:200,
               decoration:BoxDecoration(
                 color: Color(0xFF025595),
@@ -379,7 +379,8 @@ class _MainPageState extends State<MainPage> {
                         child: Container(
                           color: Color(0xffffffff),
                           child: Container(
-                            padding: EdgeInsets.all(50),
+                            width:1800,
+                            padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
                             decoration: BoxDecoration(
                               color: Colors.white,
                               boxShadow: [
@@ -828,6 +829,7 @@ class _MainPageState extends State<MainPage> {
         child: Column(
           children: [
             Container(
+              width:1800,
               height:200,
               decoration:BoxDecoration(
                 color: Color(0xFF025595),
@@ -869,6 +871,7 @@ class _MainPageState extends State<MainPage> {
                         child: Container(
                           color: Color(0xffffffff),
                           child: Container(
+                            width:1800,
                             padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
                             decoration: BoxDecoration(
                               color: Colors.white,
