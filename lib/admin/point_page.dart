@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -9,7 +8,6 @@ import 'package:plus_web/admin/setting_page.dart';
 import 'package:radio_group_v2/radio_group_v2.dart';
 
 
-late Widget top;
 List<String> map = [
   '전체',
   '충전',
@@ -66,87 +64,7 @@ class _PointPageState extends State<PointPage> {
   }
 
   @override
-  Widget build(BuildContext context) { //top right
-    if (MediaQuery.of(context).size.width < 920) {
-      top = Row(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment : Alignment.center,
-                margin: EdgeInsets.only(left: 15, right: 15),
-                width: 150,
-                height: 43,
-                decoration: BoxDecoration(
-                  color: Color(0xFFF9F9F9),
-                  border: Border.all(
-                    width: 1.0,
-                    color: Color(0xFFcccccc),
-                  ),
-
-                  borderRadius: BorderRadius.circular(5),
-                ),
-
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  onChanged: (text) {},
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                        bottom: 8,  // HERE THE IMPORTANT PART
-                      ),
-                      icon: Padding(
-                          padding: EdgeInsets.only(left: 13),
-                          child: Icon(Icons.search))),
-                ),
-              ),
-            ],
-          ),
-
-        ],
-      );
-    } else {
-      top = Row(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment : Alignment.center,
-                margin: EdgeInsets.only(left: 15, right: 15),
-                width: 350,
-                height: 43,
-                decoration: BoxDecoration(
-                  color: Color(0xFFF9F9F9),
-                  border: Border.all(
-                    width: 1.0,
-                    color: Color(0xFFcccccc),
-                  ),
-
-                  borderRadius: BorderRadius.circular(5),
-                ),
-
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  onChanged: (text) {},
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                        bottom: 8,  // HERE THE IMPORTANT PART
-                      ),
-                      icon: Padding(
-                          padding: EdgeInsets.only(left: 13),
-                          child: Icon(Icons.search))),
-                ),
-              ),
-            ],
-          ),
-
-        ],
-      );
-    }
-
+  Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
           child: Container(
@@ -179,15 +97,7 @@ class _PointPageState extends State<PointPage> {
                               ),
                             ),
                           )),
-                      Expanded(
-                        flex: 0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            top,
-                          ],
-                        ),
-                      ),
+
                     ],
                   ),
                 ),

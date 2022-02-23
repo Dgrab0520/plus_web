@@ -1,59 +1,21 @@
-
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:plus_web/admin/data/setting_data.dart';
+import 'package:plus_web/admin/model/setting_model.dart';
+import 'package:plus_web/admin/partner_page.dart';
+import 'package:plus_web/admin/chat_page.dart';
+import 'package:data_table_2/data_table_2.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mccounting_text/mccounting_text.dart';
-
-import 'package:plus_web/admin/admini_main_page.dart';
-import 'package:plus_web/admin/partner_page.dart';
-import 'package:plus_web/admin/point_page.dart';
-import 'package:radio_group_v2/radio_group_v2.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
+import 'main_page.dart';
 
 
-List<SalesData> ChartData2 = [
-  SalesData("1월",1 ),
-  SalesData("2월",2 ),
-  SalesData("3월",10),
-  SalesData("4월",11),
-  SalesData("5월",11),
-  SalesData("6월",11),
-  SalesData("7월",11),
-  SalesData("8월",11),
-  SalesData("9월",11),
-  SalesData("10월",11),
-  SalesData("11월",11),
-  SalesData("12월",11),
-];
-
-class SalesData{
-  SalesData(this.year, this.sales);
-  final String year;
-  final double sales;
+class MemberData{
+  MemberData(this.type, this.count);
+  final String type;
+  final int count;
 }
 
-final List<ChartData> chartData = [
-  ChartData('David', 25, Color(0xFF3B4E84)),
-  ChartData('Steve', 38, Color(0xFF506AB4)),
-  ChartData('Jack', 34, Color(0xFF798BBF)),
-  ChartData('Others', 52, Color(0xFFB8C1DB))
-];
-
-class ChartData {
-  ChartData(this.x, this.y, this.color);
-  final String x;
-  final double y;
-  final Color color;
-}
-
-late Widget top;
-List<String> map = [
-  '0회',
-  '1회 이상',
-  '5회 이상',
-  '10회 이상',
-];
 
 class SettingPage extends StatefulWidget {
   const SettingPage({Key? key}) : super(key: key);
@@ -62,136 +24,126 @@ class SettingPage extends StatefulWidget {
   _SettingPageState createState() => _SettingPageState();
 }
 
-class _SettingPageState extends State<SettingPage> {
-  int _counter = 0;
 
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
+
+class _SettingPageState extends State<SettingPage> {
+
+  List<Settings> setting =  [];
+  List<Settings2> setting2 =  [];
+  List<Settings3> setting3 =  [];
+  List<Settings4> setting4 =  [];
+  List<Settings5> setting5 =  [];
+  List<MemberData> ChartData = [];
+  bool _isLoading = false;
+  bool _isLoading2 = false;
+  bool _isLoading3 = false;
+  bool _isLoading4 = false;
+  bool _isLoading5 = false;
+
+
+  getGraph(){
+    Setting_Data.getGraph().then((value){
+      setState(() {
+        setting = value;
+      });
+      if(value.length == 0){
+        setState(() {
+          _isLoading = false;
+        });
+      }else{
+        setState(() {
+          _isLoading = true;
+        });
+      }
     });
   }
 
-  DateTime selectedDate = DateTime.now();
-  DateTime selectedDate2 = DateTime.now();
 
-  _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate, // Refer step 1
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != selectedDate)
+  getReg(){
+    Setting_Data.getReg(DateTime.now().toString().split("-")[0]).then((value){
       setState(() {
-        selectedDate = picked;
+        setting2 = value;
       });
+      if(value.length == 0){
+        setState(() {
+          _isLoading2 = false;
+        });
+      }else{
+        setState(() {
+          _isLoading2 = true;
+
+
+        });
+      }
+    });
   }
 
-  _selectDate2(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: selectedDate2, // Refer step 1
-      firstDate: DateTime(2022),
-      lastDate: DateTime(2025),
-    );
-    if (picked != null && picked != selectedDate2)
+  getPro(){
+    Setting_Data.getPro().then((value){
       setState(() {
-        selectedDate2 = picked;
+        setting3 = value;
       });
+      if(value.length == 0){
+        setState(() {
+          _isLoading3 = false;
+        });
+      }else{
+        setState(() {
+          _isLoading3 = true;
+
+        });
+      }
+    });
   }
 
-  RadioGroupController myController = RadioGroupController();
-  String? selectedValue;
+  getMember(){
+    Setting_Data.getMember().then((value){
+      setState(() {
+        setting4 = value;
+      });
+      if(value.length == 0){
+        setState(() {
+          _isLoading4 = false;
+        });
+      }else{
+        setState(() {
+          _isLoading4 = true;
+          ChartData.add(MemberData('customer', int.parse(setting4[0].customer)));
+          ChartData.add(MemberData('pro', int.parse(setting4[0].pro)));
+        });
+      }
+    });
+  }
 
-  final _formKey = GlobalKey<FormState>();
+  getService(){
+    Setting_Data.getService().then((value){
+      setState(() {
+        setting5 = value;
+      });
+      if(value.length == 0){
+        setState(() {
+          _isLoading5 = false;
+        });
+      }else{
+        setState(() {
+          _isLoading5 = true;
+        });
+      }
+    });
+  }
 
   @override
   void initState() {
     super.initState();
+    getMember();
+    getGraph();
+    getReg();
+    getPro();
+    getService();
   }
 
   @override
-  Widget build(BuildContext context) { //top right
-    if (MediaQuery.of(context).size.width < 920) {
-      top = Row(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment : Alignment.center,
-                margin: EdgeInsets.only(left: 15, right: 15),
-                width: 150,
-                height: 43,
-                decoration: BoxDecoration(
-                  color: Color(0xFFF9F9F9),
-                  border: Border.all(
-                    width: 1.0,
-                    color: Color(0xFFcccccc),
-                  ),
-
-                  borderRadius: BorderRadius.circular(5),
-                ),
-
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  onChanged: (text) {},
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                        bottom: 8,  // HERE THE IMPORTANT PART
-                      ),
-                      icon: Padding(
-                          padding: EdgeInsets.only(left: 13),
-                          child: Icon(Icons.search))),
-                ),
-              ),
-            ],
-          ),
-
-        ],
-      );
-    } else {
-      top = Row(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                alignment : Alignment.center,
-                margin: EdgeInsets.only(left: 15, right: 15),
-                width: 350,
-                height: 43,
-                decoration: BoxDecoration(
-                  color: Color(0xFFF9F9F9),
-                  border: Border.all(
-                    width: 1.0,
-                    color: Color(0xFFcccccc),
-                  ),
-
-                  borderRadius: BorderRadius.circular(5),
-                ),
-
-                child: TextField(
-                  keyboardType: TextInputType.text,
-                  onChanged: (text) {},
-                  decoration: InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.only(
-                        bottom: 8,  // HERE THE IMPORTANT PART
-                      ),
-                      icon: Padding(
-                          padding: EdgeInsets.only(left: 13),
-                          child: Icon(Icons.search))),
-                ),
-              ),
-            ],
-          ),
-
-        ],
-      );
-    }
-
+  Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFfD1D9E5),
       body: SafeArea(
@@ -213,7 +165,7 @@ class _SettingPageState extends State<SettingPage> {
                       Expanded(
                           child: InkWell(
                             onTap:(){
-                              Get.to(AdminPage());
+                              Get.to(MainPage());
                             },
                             child: Text(
                               '관리자 페이지',
@@ -223,23 +175,18 @@ class _SettingPageState extends State<SettingPage> {
                                 fontFamily: 'NanumSquareB',
                               ),
                             ),
-                          )),
-                      Expanded(
-                        flex: 0,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            top,
-                          ],
-                        ),
+                          )
                       ),
                     ],
                   ),
                 ),
                 Expanded(
                     flex: 9,
-                    child: MediaQuery.of(context).size.width < 1200  ? Column(
+                    child: MediaQuery.of(context).size.width > 1300
+                        ?
+                    Column(
                       children: [
+                        //Header
                         Container(
                           width:Get.width,
                           height:60,
@@ -252,7 +199,7 @@ class _SettingPageState extends State<SettingPage> {
                             children: [
                               InkWell(
                                 onTap:(){
-                                  Get.to(AdminPage());
+                                  Get.to(MainPage());
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(10.0),
@@ -260,7 +207,7 @@ class _SettingPageState extends State<SettingPage> {
                                     color:Color(0xFF3B4E84),
                                   ),
                                   child: Center(
-                                    child: Text('고객관리',
+                                    child: Text('고객 관리',
                                       style: TextStyle(
                                         fontSize:16,
                                         fontFamily: 'NanumSquareR',
@@ -300,7 +247,7 @@ class _SettingPageState extends State<SettingPage> {
                                     color:Color(0xFF3B4E84),
                                   ),
                                   child: Center(
-                                    child: Text('포인트 관리',
+                                    child: Text('채팅 관리',
                                       style: TextStyle(
                                         fontSize:16,
                                         fontFamily: 'NanumSquareR',
@@ -321,7 +268,7 @@ class _SettingPageState extends State<SettingPage> {
                                     color:Colors.white,
                                   ),
                                   child: Center(
-                                    child: Text('통계관리',
+                                    child: Text('통계&설정',
                                       style: TextStyle(
                                         fontSize:16,
                                         fontFamily: 'NanumSquareB',
@@ -333,536 +280,491 @@ class _SettingPageState extends State<SettingPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          width: Get.width,
-                          height:500,
+                        Expanded(
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
+
                                 Row(
                                   children: [
                                     Expanded(
-                                      flex:2,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 30,
-                                          right: MediaQuery.of(context).size.width / 70,
-                                          top: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.all(10),
-                                          width:400,
-                                          height:400,
-                                          decoration:BoxDecoration(
-                                            color:Colors.white,
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Center(
-                                                child: Text('카테고리별 이용자',
-                                                  style:TextStyle(
-                                                    fontSize:15,
-                                                    fontFamily: 'NanumSquareEB',
+                                      child: Container(
+                                        color: Colors.white,
+                                        margin: EdgeInsets.only(left: MediaQuery.of(context).size.width / 30, right: 10.0,),
+                                        padding: EdgeInsets.only(top: 20,),
+                                        height: 500,
+                                        child: Column(
+                                          children: [
+                                            Text('서비스별 이용 현황',
+                                              style:TextStyle(
+                                                fontSize:15,
+                                                fontFamily: 'NanumSquareEB',
+                                              ),
+                                            ),
+                                            SizedBox(height: 20.0,),
+                                            Container(
+                                                height: 440,
+                                              child:SingleChildScrollView(
+                                                child: DataTable2(
+                                                  columnSpacing: 10,
+                                                  minWidth: 450,
+                                                  columns: [
+                                                    DataColumn(
+                                                      label: Text("서비스",
+                                                        style:TextStyle(
+                                                          fontSize:14,
+                                                          color: Colors.deepOrange,
+                                                          fontFamily: 'NanumSquareB',
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    DataColumn(
+                                                      label: Center(
+                                                        child: Text("신청 횟수(건)",
+                                                          style:TextStyle(
+                                                            fontSize:14,
+                                                            color: Colors.deepOrange,
+                                                            fontFamily: 'NanumSquareB',
+                                                          ),
+                                                        ),
+                                                      )
+                                                    ),
+                                                  ],
+                                                  rows: List.generate(
+                                                    setting.length,
+                                                        (index) => DataRow(
+                                                      cells: [
+                                                        DataCell(Text('${setting[index].sub_category}')),
+                                                        DataCell(Center(child: Text('${setting[index].count} 건'),)),
+                                                      ],
+                                                    ),
                                                   ),
                                                 ),
-                                              ),
-                                              SfCircularChart(
-                                                  series: <CircularSeries>[
-                                                    // Renders doughnut chart
-                                                    DoughnutSeries<ChartData, String>(
-                                                        dataSource: chartData,
-                                                        pointColorMapper:(ChartData data,  _) => data.color,
-                                                        xValueMapper: (ChartData data, _) => data.x,
-                                                        yValueMapper: (ChartData data, _) => data.y
-                                                    )
-                                                  ]
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        width:10,
-                                                        height:10,
-                                                        decoration:BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color:Color(0xFF3B4E84),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('이용자',
-                                                          style:TextStyle(
-                                                            fontSize:11,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('25%',
-                                                          style:TextStyle(
-                                                            fontSize:11,
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        width:10,
-                                                        height:10,
-                                                        decoration:BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color:Color(0xFF3B4E84),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('이용자',
-                                                          style:TextStyle(
-                                                            fontSize:11,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('25%',
-                                                          style:TextStyle(
-                                                            fontSize:11,
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
+                                              )
+                                            ),
+
+                                          ],
+                                        )
+                                      )
                                     ),
                                     Expanded(
                                       flex:2,
                                       child: Padding(
                                         padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 70,
                                           right: MediaQuery.of(context).size.width / 30,
                                           top: MediaQuery.of(context).size.width / 30,
                                           bottom: MediaQuery.of(context).size.width / 30,
                                         ),
                                         child: Container(
-                                          padding: EdgeInsets.all(10),
+                                          padding: EdgeInsets.only(left:30,right:30,top:20),
                                           width:400,
-                                          height:400,
+                                          height:500,
                                           decoration:BoxDecoration(
                                             color:Colors.white,
-                                            borderRadius: BorderRadius.circular(5),
                                           ),
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.start,
                                             crossAxisAlignment: CrossAxisAlignment.start,
                                             children: [
-                                              SizedBox(height:15),
-                                              Center(
-                                                child: Text('월별 이용자',
-                                                  style:TextStyle(
-                                                    fontSize:15,
-                                                    fontFamily: 'NanumSquareEB',
-                                                  ),
+                                              Text('월별 이용현황',
+                                                style:TextStyle(
+                                                  fontSize:16,
+                                                  fontFamily: 'NanumSquareEB',
                                                 ),
                                               ),
                                               SizedBox(height:30),
-                                              SfCartesianChart(
-                                                  primaryXAxis: CategoryAxis(),
-                                                  primaryYAxis: NumericAxis(),
-                                                  series: <ChartSeries<SalesData, String>>[
-                                                    // Renders column chart
-                                                    ColumnSeries<SalesData, String>(
-                                                        color: Color(0xFF506AB4),
-                                                        dataSource: ChartData2,
-                                                        xValueMapper: (SalesData sales, _) => sales.year,
-                                                        yValueMapper: (SalesData sales, _) => sales.sales
-                                                    )
-                                                  ]
+                                              SizedBox(
+                                                height: 410,
+                                                child: SfCartesianChart(
+                                                    primaryXAxis: CategoryAxis(),
+                                                    primaryYAxis: NumericAxis(),
+                                                    series: <ChartSeries<Settings2, String>>[
+                                                      // Renders column chart
+                                                      ColumnSeries<Settings2, String>(
+                                                          color: Color(0xFF506AB4),
+                                                          dataSource: setting2,
+                                                          xValueMapper: (Settings2 setting2, _) => setting2.month+'월',
+                                                          yValueMapper: (Settings2 setting2, _) => int.parse(setting2.count),
+                                                      ),
+                                                    ]
+                                                ),
                                               ),
+
                                             ],
                                           ),
                                         ),
                                       ),
                                     ),
                                   ],
+                                ),
+
+                                Row(
+                                  children: [
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width:400,
+                                        height:350,
+                                        decoration:BoxDecoration(
+                                          color:Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height:15),
+                                            SfCircularChart(
+                                                title: ChartTitle(text: '전체 회원 현황', textStyle: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: 'NanumSquareEB',
+                                                )),
+                                                legend: Legend(isVisible: true),
+                                                series: <PieSeries<MemberData, String>>[
+                                                  PieSeries<MemberData, String>(
+                                                      explode: true,
+                                                      explodeIndex: 0,
+                                                      dataSource: ChartData,
+                                                      xValueMapper: (MemberData member, _) => member.type,
+                                                      yValueMapper: (MemberData member, _) => member.count,
+                                                      dataLabelMapper: (MemberData member, _) => member.type,
+                                                      dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                                ]
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.0,),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width:400,
+                                        height:350,
+                                        decoration:BoxDecoration(
+                                          color:Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height:15),
+                                            SfCircularChart(
+                                                title: ChartTitle(text: '파트너 현황', textStyle: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: 'NanumSquareEB',
+                                                )),
+                                                legend: Legend(isVisible: true),
+                                                series: <PieSeries<Settings3, String>>[
+                                                  PieSeries<Settings3, String>(
+                                                      explode: true,
+                                                      explodeIndex: 0,
+                                                      dataSource: setting3,
+                                                      xValueMapper: (Settings3 setting3, _) => setting3.index == '' ? '일반 파트너' : '제휴 파트너',
+                                                      yValueMapper: (Settings3 setting3, _) => int.parse(setting3.count),
+                                                      dataLabelMapper: (Settings3 setting3, _) => setting3.index == '' ? '일반 파트너' : '제휴 파트너',
+                                                      dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                                ]
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.0,),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width:400,
+                                        height:350,
+                                        decoration:BoxDecoration(
+                                          color:Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height:15),
+                                            SfCartesianChart(
+                                                title: ChartTitle(text: '파트너 분야 Top 10', textStyle: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: 'NanumSquareEB',
+                                                )),
+                                                primaryXAxis: CategoryAxis(),
+                                                primaryYAxis: NumericAxis(),
+                                                series: <ChartSeries<Settings5, String>>[
+                                                  // Renders column chart
+                                                  BarSeries<Settings5, String>(
+                                                    // color: Color(0xFF506AB4),
+                                                    dataSource: setting5,
+                                                    xValueMapper: (Settings5 setting5, _) => setting5.service,
+                                                    yValueMapper: (Settings5 setting5, _) => int.parse(setting5.count),
+                                                  ),
+                                                ]
+                                            ),
+                                            // SfCircularChart(
+                                            //     title: ChartTitle(text: '파트너 분야', textStyle: TextStyle(
+                                            //       fontSize: 14.0,
+                                            //       fontFamily: 'NanumSquareEB',
+                                            //     )),
+                                            //     legend: Legend(isVisible: true),
+                                            //     series: <PieSeries<Settings5, String>>[
+                                            //       PieSeries<Settings5, String>(
+                                            //           explode: true,
+                                            //           explodeIndex: 0,
+                                            //           dataSource: setting5,
+                                            //           xValueMapper: (Settings5 setting5, _) => setting5.service,
+                                            //           yValueMapper: (Settings5 setting5, _) => int.parse(setting5.count),
+                                            //       ),
+                                            //     ]
+                                            // )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    // SizedBox(width: 10.0,),
+                                    // Expanded(
+                                    //   child: Container(
+                                    //     padding: EdgeInsets.all(5),
+                                    //     width:400,
+                                    //     height:350,
+                                    //     decoration:BoxDecoration(
+                                    //       color:Colors.white,
+                                    //       borderRadius: BorderRadius.circular(5),
+                                    //     ),
+                                    //     child: Column(
+                                    //       mainAxisAlignment: MainAxisAlignment.start,
+                                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                                    //       children: [
+                                    //         SizedBox(height:15),
+                                    //         SfCircularChart(
+                                    //             title: ChartTitle(text: '전체 회원 현황', textStyle: TextStyle(
+                                    //               fontSize: 14.0,
+                                    //               fontFamily: 'NanumSquareEB',
+                                    //             )),
+                                    //             legend: Legend(isVisible: true),
+                                    //             series: <PieSeries<Settings2, String>>[
+                                    //               PieSeries<Settings2, String>(
+                                    //                   explode: true,
+                                    //                   explodeIndex: 0,
+                                    //                   dataSource: setting2,
+                                    //                   xValueMapper: (Settings2 setting2, _) => setting2.month,
+                                    //                   yValueMapper: (Settings2 setting2, _) => int.parse(setting2.count),
+                                    //                   dataLabelMapper: (Settings2 setting2, _) => setting2.month+'월',
+                                    //                   dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                    //             ]
+                                    //         )
+                                    //       ],
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
+                                  ],
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.width / 30,),
+                                Container(
+                                  width:Get.width,
+                                  height:80,
+                                  padding: EdgeInsets.only(
+                                    left: MediaQuery.of(context).size.width / 30,
+                                    bottom: MediaQuery.of(context).size.width / 100,
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.arrow_right),
+                                      Text('설정 관리',
+                                        style:TextStyle(
+                                          fontFamily: 'NanumSquareEB',
+                                          fontSize:18,
+                                        ),
+                                      ),
+                                    ],
+                                  )
                                 ),
                                 Row(
                                   children: [
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
                                     Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 30,
-                                          right: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width:300,
+                                        height:350,
+                                        decoration:BoxDecoration(
+                                          color:Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
                                         ),
                                         child: Container(
-                                          padding: EdgeInsets.all(5),
-                                          width:400,
-                                          height:180,
-                                          decoration:BoxDecoration(
-                                            color:Colors.white,
+                                          margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                          decoration: BoxDecoration(
                                             borderRadius: BorderRadius.circular(5),
+                                            border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
                                           ),
                                           child: Column(
                                             mainAxisAlignment: MainAxisAlignment.center,
                                             crossAxisAlignment: CrossAxisAlignment.center,
                                             children: [
-                                              SizedBox(height:15),
-                                              Text('신규가입자',
-                                                style:TextStyle(
-                                                    fontSize:13,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
+                                              Text('채팅 내역 확인',
+                                                  style: TextStyle(
+                                                    fontSize: 17.0,
+                                                    color: Colors.black,
+                                                    fontFamily: 'NanumSquareEB',
+                                                  )
+                                              ),
+                                              SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                              Text('고객과 전문가의 채팅 내역을 조회할 수 있습니다',
+                                                style: TextStyle(
+                                                  fontSize: 15.0,
+                                                  color: Colors.grey,
+                                                  fontFamily: 'NanumSquareR',
                                                 ),
+                                                textAlign: TextAlign.center,
                                               ),
-                                              SizedBox(height:20),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    child: Text('+',
-                                                      style:TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 255,
-                                                      style: TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.arrow_upward_outlined, color:Color(0xFF798BBF),size:14,),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: Text('5.27%',
-                                                      style:TextStyle(
-                                                        fontSize:15,
-                                                        color:Color(0xFF798BBF),
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height:10),
-                                                  Container(
-                                                    child: Text('전월대비',
-                                                      style:TextStyle(
-                                                          fontSize:13,
-                                                          fontFamily: 'NanumSquareR',
-                                                          color:Color(0xFF797A7D)
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
+
                                             ],
                                           ),
-                                        ),
+                                        )
                                       ),
                                     ),
+                                    SizedBox(width: 10.0,),
                                     Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 30,
-                                          right: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
+                                      child: Container(
                                           padding: EdgeInsets.all(5),
-                                          width:400,
-                                          height:180,
+                                          width:300,
+                                          height:350,
                                           decoration:BoxDecoration(
                                             color:Colors.white,
                                             borderRadius: BorderRadius.circular(5),
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('신규가입자',
-                                                style:TextStyle(
-                                                    fontSize:13,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text('거래 내역 확인',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                      color: Colors.black,
+                                                      fontFamily: 'NanumSquareEB',
+                                                    )
                                                 ),
-                                              ),
-                                              SizedBox(height:20),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    child: Text('+',
-                                                      style:TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
+                                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                                Text('고객과 전문가의 거래 내역을 확인할 수 있습니다',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'NanumSquareR',
                                                   ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 255,
-                                                      style: TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.arrow_upward_outlined, color:Color(0xFF798BBF),size:14,),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: Text('5.27%',
-                                                      style:TextStyle(
-                                                        fontSize:15,
-                                                        color:Color(0xFF798BBF),
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height:10),
-                                                  Container(
-                                                    child: Text('전월대비',
-                                                      style:TextStyle(
-                                                          fontSize:13,
-                                                          fontFamily: 'NanumSquareR',
-                                                          color:Color(0xFF797A7D)
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+
+                                              ],
+                                            ),
+                                          )
                                       ),
                                     ),
+                                    SizedBox(width: 10.0,),
                                     Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 30,
-                                          right: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
+                                      child: Container(
                                           padding: EdgeInsets.all(5),
-                                          width:400,
-                                          height:180,
+                                          width:300,
+                                          height:350,
                                           decoration:BoxDecoration(
                                             color:Colors.white,
                                             borderRadius: BorderRadius.circular(5),
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('탈퇴자',
-                                                style:TextStyle(
-                                                    fontSize:13,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text('배너 설정',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                      color: Colors.black,
+                                                      fontFamily: 'NanumSquareEB',
+                                                    )
                                                 ),
-                                              ),
-                                              SizedBox(height:20),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    child: Text('-',
-                                                      style:TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
+                                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                                Text('배너를 변경할 수 있습니다',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'NanumSquareR',
                                                   ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 15,
-                                                      style: TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.arrow_downward_outlined, color:Colors.red,size:14,),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: Text('5.27%',
-                                                      style:TextStyle(
-                                                        fontSize:15,
-                                                        color:Colors.red,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height:10),
-                                                  Container(
-                                                    child: Text('전월대비',
-                                                      style:TextStyle(
-                                                          fontSize:13,
-                                                          fontFamily: 'NanumSquareR',
-                                                          color:Color(0xFF797A7D)
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+
+                                              ],
+                                            ),
+                                          )
                                       ),
                                     ),
+                                    SizedBox(width: 10.0,),
                                     Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 30,
-                                          right: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
+                                      child: Container(
                                           padding: EdgeInsets.all(5),
-                                          width:400,
-                                          height:180,
+                                          width:300,
+                                          height:350,
                                           decoration:BoxDecoration(
                                             color:Colors.white,
                                             borderRadius: BorderRadius.circular(5),
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            crossAxisAlignment: CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('재가입자',
-                                                style:TextStyle(
-                                                    fontSize:13,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text('기타 설정',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                      color: Colors.black,
+                                                      fontFamily: 'NanumSquareEB',
+                                                    )
                                                 ),
-                                              ),
-                                              SizedBox(height:20),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Container(
-                                                    child: Text('+',
-                                                      style:TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
+                                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                                Text('기타 설정을 변경할 수 있습니다',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'NanumSquareR',
                                                   ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 25,
-                                                      style: TextStyle(
-                                                        fontSize:21,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Column(
-                                                mainAxisAlignment: MainAxisAlignment.center,
-                                                crossAxisAlignment: CrossAxisAlignment.center,
-                                                children: [
-                                                  Icon(Icons.arrow_upward_outlined, color:Color(0xFF798BBF),size:14,),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: Text('5.27%',
-                                                      style:TextStyle(
-                                                        fontSize:15,
-                                                        color:Color(0xFF798BBF),
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(height:10),
-                                                  Container(
-                                                    child: Text('전월대비',
-                                                      style:TextStyle(
-                                                          fontSize:13,
-                                                          fontFamily: 'NanumSquareR',
-                                                          color:Color(0xFF797A7D)
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+
+                                              ],
+                                            ),
+                                          )
                                       ),
                                     ),
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
                                   ],
                                 ),
+                                SizedBox(height: 100.0,)
                               ],
                             ),
                           ),
                         ),
                       ],
-                    ) : Column(
+                    )
+                        :
+                    Column(
                       children: [
                         Container(
                           width:Get.width,
@@ -876,7 +778,7 @@ class _SettingPageState extends State<SettingPage> {
                             children: [
                               InkWell(
                                 onTap:(){
-                                  Get.to(AdminPage());
+                                  Get.to(MainPage());
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(15.0),
@@ -884,7 +786,7 @@ class _SettingPageState extends State<SettingPage> {
                                     color:Color(0xFF3B4E84),
                                   ),
                                   child: Center(
-                                    child: Text('고객관리',
+                                    child: Text('고객 관리',
                                       style: TextStyle(
                                         fontSize:16,
                                         fontFamily: 'NanumSquareR',
@@ -924,7 +826,7 @@ class _SettingPageState extends State<SettingPage> {
                                     color:Color(0xFF3B4E84),
                                   ),
                                   child: Center(
-                                    child: Text('포인트 관리',
+                                    child: Text('채팅 관리',
                                       style: TextStyle(
                                         fontSize:16,
                                         fontFamily: 'NanumSquareR',
@@ -945,7 +847,7 @@ class _SettingPageState extends State<SettingPage> {
                                     color:Colors.white,
                                   ),
                                   child: Center(
-                                    child: Text('통계관리',
+                                    child: Text('통계&설정',
                                       style: TextStyle(
                                         fontSize:16,
                                         fontFamily: 'NanumSquareB',
@@ -957,559 +859,482 @@ class _SettingPageState extends State<SettingPage> {
                             ],
                           ),
                         ),
-                        Container(
-                          width: Get.width,
-                          height:600,
+                        Expanded(
                           child: SingleChildScrollView(
                             child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 30,
-                                          right: MediaQuery.of(context).size.width / 70,
-                                          top: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
+                                SizedBox(height: MediaQuery.of(context).size.width / 30,),
+                                Container(
+                                  padding: EdgeInsets.only(left:30,right:30,top:20),
+                                  margin: EdgeInsets.only(left: MediaQuery.of(context).size.width / 30, right: MediaQuery.of(context).size.width / 30,),
+                                  height:500,
+                                  decoration:BoxDecoration(
+                                    color:Colors.white,
+                                  ),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text('월별 이용현황',
+                                        style:TextStyle(
+                                          fontSize:16,
+                                          fontFamily: 'NanumSquareEB',
                                         ),
-                                        child: Container(
-                                          padding: EdgeInsets.only(left:30,right:30,top:20),
-                                          width:400,
-                                          height:400,
-                                          decoration:BoxDecoration(
-                                            color:Colors.white,
-                                            borderRadius: BorderRadius.circular(5),
+                                      ),
+                                      SizedBox(height:30),
+                                      SizedBox(
+                                        height: 410,
+                                        child: SfCartesianChart(
+                                            primaryXAxis: CategoryAxis(),
+                                            primaryYAxis: NumericAxis(),
+                                            series: <ChartSeries<Settings2, String>>[
+                                              // Renders column chart
+                                              ColumnSeries<Settings2, String>(
+                                                color: Color(0xFF506AB4),
+                                                dataSource: setting2,
+                                                xValueMapper: (Settings2 setting2, _) => setting2.month+'월',
+                                                yValueMapper: (Settings2 setting2, _) => int.parse(setting2.count),
+                                              ),
+                                            ]
+                                        ),
+                                      ),
+
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                Container(
+                                    color: Colors.white,
+                                    margin: EdgeInsets.only(left: MediaQuery.of(context).size.width / 30, right: MediaQuery.of(context).size.width / 30,),
+                                    padding: EdgeInsets.only(top: 20,),
+                                    height: 500,
+                                    child: Column(
+                                      children: [
+                                        Text('서비스별 이용 현황',
+                                          style:TextStyle(
+                                            fontSize:15,
+                                            fontFamily: 'NanumSquareEB',
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('카테고리별 이용자',
-                                                style:TextStyle(
-                                                  fontSize:16,
-                                                  fontFamily: 'NanumSquareEB',
-                                                ),
-                                              ),
-                                              SfCircularChart(
-                                                  series: <CircularSeries>[
-                                                    // Renders doughnut chart
-                                                    DoughnutSeries<ChartData, String>(
-                                                        dataSource: chartData,
-                                                        pointColorMapper:(ChartData data,  _) => data.color,
-                                                        xValueMapper: (ChartData data, _) => data.x,
-                                                        yValueMapper: (ChartData data, _) => data.y
-                                                    )
-                                                  ]
-                                              ),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        width:15,
-                                                        height:15,
-                                                        decoration:BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color:Color(0xFF3B4E84),
-                                                        ),
+                                        ),
+                                        SizedBox(height: 20.0,),
+                                        Container(
+                                            height: 440,
+                                            child:SingleChildScrollView(
+                                              child: DataTable2(
+                                                columnSpacing: 10,
+                                                minWidth: 450,
+                                                columns: [
+                                                  DataColumn(
+                                                    label: Text("서비스",
+                                                      style:TextStyle(
+                                                        fontSize:14,
+                                                        color: Colors.deepOrange,
+                                                        fontFamily: 'NanumSquareB',
                                                       ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('이용자',
-                                                          style:TextStyle(
-                                                            fontSize:13,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('25%',
-                                                          style:TextStyle(
-                                                            fontSize:13,
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                    ),
                                                   ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        width:15,
-                                                        height:15,
-                                                        decoration:BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color:Color(0xFF3B4E84),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('이용자',
+                                                  DataColumn(
+                                                      label: Center(
+                                                        child: Text("신청 횟수(건)",
                                                           style:TextStyle(
-                                                            fontSize:13,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('25%',
-                                                          style:TextStyle(
-                                                            fontSize:13,
+                                                            fontSize:14,
+                                                            color: Colors.deepOrange,
                                                             fontFamily: 'NanumSquareB',
                                                           ),
                                                         ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: [
-                                                      Container(
-                                                        width:15,
-                                                        height:15,
-                                                        decoration:BoxDecoration(
-                                                          borderRadius: BorderRadius.circular(5),
-                                                          color:Color(0xFF3B4E84),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('이용자',
-                                                          style:TextStyle(
-                                                            fontSize:13,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:5),
-                                                      Container(
-                                                        child: Text('25%',
-                                                          style:TextStyle(
-                                                            fontSize:13,
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
+                                                      )
                                                   ),
                                                 ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      flex:2,
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 70,
-                                          right: MediaQuery.of(context).size.width / 30,
-                                          top: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.only(left:30,right:30,top:20),
-                                          width:400,
-                                          height:400,
-                                          decoration:BoxDecoration(
-                                            color:Colors.white,
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('월별 이용자',
-                                                style:TextStyle(
-                                                  fontSize:16,
-                                                  fontFamily: 'NanumSquareEB',
+                                                rows: List.generate(
+                                                  setting.length,
+                                                      (index) => DataRow(
+                                                    cells: [
+                                                      DataCell(Text('${setting[index].sub_category}')),
+                                                      DataCell(Center(child: Text('${setting[index].count} 건'),)),
+                                                    ],
+                                                  ),
                                                 ),
                                               ),
-                                              SizedBox(height:30),
-                                              SfCartesianChart(
+                                            )
+                                        ),
 
-                                                  primaryXAxis: CategoryAxis(),
-                                                  primaryYAxis: NumericAxis(),
-                                                  series: <ChartSeries<SalesData, String>>[
-                                                    // Renders column chart
-                                                    ColumnSeries<SalesData, String>(
-                                                        color: Color(0xFF506AB4),
-                                                        dataSource: ChartData2,
-                                                        xValueMapper: (SalesData sales, _) => sales.year,
-                                                        yValueMapper: (SalesData sales, _) => sales.sales
-                                                    )
-                                                  ]
-                                              ),
-                                            ],
-                                          ),
+                                      ],
+                                    )
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                Row(
+                                  children: [
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width:400,
+                                        height:350,
+                                        decoration:BoxDecoration(
+                                          color:Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height:15),
+                                            SfCircularChart(
+                                                title: ChartTitle(text: '전체 회원 현황', textStyle: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: 'NanumSquareEB',
+                                                )),
+                                                legend: Legend(isVisible: true),
+                                                series: <PieSeries<Settings2, String>>[
+                                                  PieSeries<Settings2, String>(
+                                                      explode: true,
+                                                      explodeIndex: 0,
+                                                      dataSource: setting2,
+                                                      xValueMapper: (Settings2 setting2, _) => setting2.month,
+                                                      yValueMapper: (Settings2 setting2, _) => int.parse(setting2.count),
+                                                      dataLabelMapper: (Settings2 setting2, _) => setting2.month+'월',
+                                                      dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                                ]
+                                            )
+                                          ],
                                         ),
                                       ),
                                     ),
+                                    SizedBox(width: 10.0,),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width:400,
+                                        height:350,
+                                        decoration:BoxDecoration(
+                                          color:Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height:15),
+                                            SfCircularChart(
+                                                title: ChartTitle(text: '파트너 현황', textStyle: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: 'NanumSquareEB',
+                                                )),
+                                                legend: Legend(isVisible: true),
+                                                series: <PieSeries<Settings3, String>>[
+                                                  PieSeries<Settings3, String>(
+                                                      explode: true,
+                                                      explodeIndex: 0,
+                                                      dataSource: setting3,
+                                                      xValueMapper: (Settings3 setting3, _) => setting3.index == '' ? '일반 파트너' : '제휴 파트너',
+                                                      yValueMapper: (Settings3 setting3, _) => int.parse(setting3.count),
+                                                      dataLabelMapper: (Settings3 setting3, _) => setting3.index == '' ? '일반 파트너' : '제휴 파트너',
+                                                      dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                                ]
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
                                   ],
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                Row(
+                                  children: [
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
+                                    Expanded(
+                                      child: Container(
+                                        padding: EdgeInsets.all(5),
+                                        width:400,
+                                        height:350,
+                                        decoration:BoxDecoration(
+                                          color:Colors.white,
+                                          borderRadius: BorderRadius.circular(5),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.center,
+                                          children: [
+                                            SizedBox(height:15),
+                                            SfCartesianChart(
+                                                title: ChartTitle(text: '파트너 분야 Top 10', textStyle: TextStyle(
+                                                  fontSize: 14.0,
+                                                  fontFamily: 'NanumSquareEB',
+                                                )),
+                                                primaryXAxis: CategoryAxis(),
+                                                primaryYAxis: NumericAxis(),
+                                                series: <ChartSeries<Settings5, String>>[
+                                                  // Renders column chart
+                                                  BarSeries<Settings5, String>(
+                                                    // color: Color(0xFF506AB4),
+                                                    dataSource: setting5,
+                                                    xValueMapper: (Settings5 setting5, _) => setting5.service,
+                                                    yValueMapper: (Settings5 setting5, _) => int.parse(setting5.count),
+                                                  ),
+                                                ]
+                                            ),
+                                            // SfCircularChart(
+                                            //     title: ChartTitle(text: '파트너 분야', textStyle: TextStyle(
+                                            //       fontSize: 14.0,
+                                            //       fontFamily: 'NanumSquareEB',
+                                            //     )),
+                                            //     legend: Legend(isVisible: true),
+                                            //     series: <PieSeries<Settings2, String>>[
+                                            //       PieSeries<Settings2, String>(
+                                            //           explode: true,
+                                            //           explodeIndex: 0,
+                                            //           dataSource: setting2,
+                                            //           xValueMapper: (Settings2 setting2, _) => setting2.month,
+                                            //           yValueMapper: (Settings2 setting2, _) => int.parse(setting2.count),
+                                            //           dataLabelMapper: (Settings2 setting2, _) => setting2.month+'월 : ${setting2.count}',
+                                            //           dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                            //     ]
+                                            // )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    // SizedBox(width: 10.0,),
+                                    // Expanded(
+                                    //   child: Container(
+                                    //     padding: EdgeInsets.all(5),
+                                    //     width:400,
+                                    //     height:350,
+                                    //     decoration:BoxDecoration(
+                                    //       color:Colors.white,
+                                    //       borderRadius: BorderRadius.circular(5),
+                                    //     ),
+                                    //     child: Column(
+                                    //       mainAxisAlignment: MainAxisAlignment.start,
+                                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                                    //       children: [
+                                    //         SizedBox(height:15),
+                                    //         SfCircularChart(
+                                    //             title: ChartTitle(text: '전체 회원 현황', textStyle: TextStyle(
+                                    //               fontSize: 14.0,
+                                    //               fontFamily: 'NanumSquareEB',
+                                    //             )),
+                                    //             legend: Legend(isVisible: true),
+                                    //             series: <PieSeries<Settings2, String>>[
+                                    //               PieSeries<Settings2, String>(
+                                    //                   explode: true,
+                                    //                   explodeIndex: 0,
+                                    //                   dataSource: setting2,
+                                    //                   xValueMapper: (Settings2 setting2, _) => setting2.month,
+                                    //                   yValueMapper: (Settings2 setting2, _) => int.parse(setting2.count),
+                                    //                   dataLabelMapper: (Settings2 setting2, _) => setting2.month+'월',
+                                    //                   dataLabelSettings: DataLabelSettings(isVisible: true)),
+                                    //             ]
+                                    //         )
+                                    //       ],
+                                    //     ),
+                                    //   ),
+                                    // ),
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
+                                  ],
+                                ),
+
+                                SizedBox(height: MediaQuery.of(context).size.width / 30,),
+                                Container(
+                                    width:Get.width,
+                                    height:80,
+                                    padding: EdgeInsets.only(
+                                      left: MediaQuery.of(context).size.width / 30,
+                                      bottom: MediaQuery.of(context).size.width / 100,
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Icon(Icons.arrow_right),
+                                        Text('설정 관리',
+                                          style:TextStyle(
+                                            fontFamily: 'NanumSquareEB',
+                                            fontSize:18,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                 ),
                                 Row(
                                   children: [
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
                                     Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 30,
-                                          right: MediaQuery.of(context).size.width / 70,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.only(left:30,right:30,top:20),
-                                          width:400,
-                                          height:180,
+                                      child: Container(
+                                          padding: EdgeInsets.all(5),
+                                          width:300,
+                                          height:350,
                                           decoration:BoxDecoration(
                                             color:Colors.white,
                                             borderRadius: BorderRadius.circular(5),
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('신규 가입자',
-                                                style:TextStyle(
-                                                    fontSize:16,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text('채팅 내역 확인',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                      color: Colors.black,
+                                                      fontFamily: 'NanumSquareEB',
+                                                    )
                                                 ),
-                                              ),
-                                              SizedBox(height:20),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    child: Text('+',
-                                                      style:TextStyle(
-                                                        fontSize:35,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
+                                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                                Text('고객과 전문가의 채팅 내역을 조회할 수 있습니다',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'NanumSquareR',
                                                   ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 255,
-                                                      style: TextStyle(
-                                                        fontSize:40,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(Icons.arrow_upward_outlined, color:Color(0xFF798BBF),size:14,),
-                                                      SizedBox(width:3),
-                                                      Container(
-                                                        child: Text('5.27%',
-                                                          style:TextStyle(
-                                                            fontSize:15,
-                                                            color:Color(0xFF798BBF),
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:10),
-                                                      Container(
-                                                        child: Text('전월대비',
-                                                          style:TextStyle(
-                                                              fontSize:13,
-                                                              fontFamily: 'NanumSquareR',
-                                                              color:Color(0xFF797A7D)
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 70,
-                                          right: MediaQuery.of(context).size.width / 70,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.only(left:30,right:30,top:20),
-                                          width:400,
-                                          height:180,
-                                          decoration:BoxDecoration(
-                                            color:Colors.white,
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('신규 가입자',
-                                                style:TextStyle(
-                                                    fontSize:16,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
+                                                  textAlign: TextAlign.center,
                                                 ),
-                                              ),
-                                              SizedBox(height:20),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    child: Text('+',
-                                                      style:TextStyle(
-                                                        fontSize:35,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 255,
-                                                      style: TextStyle(
-                                                        fontSize:40,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(Icons.arrow_upward_outlined, color:Color(0xFF798BBF),size:14,),
-                                                      SizedBox(width:3),
-                                                      Container(
-                                                        child: Text('5.27%',
-                                                          style:TextStyle(
-                                                            fontSize:15,
-                                                            color:Color(0xFF798BBF),
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:10),
-                                                      Container(
-                                                        child: Text('전월대비',
-                                                          style:TextStyle(
-                                                              fontSize:13,
-                                                              fontFamily: 'NanumSquareR',
-                                                              color:Color(0xFF797A7D)
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
-                                          left: MediaQuery.of(context).size.width / 70,
-                                          right: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.only(left:30,right:30,top:20),
-                                          width:400,
-                                          height:180,
-                                          decoration:BoxDecoration(
-                                            color:Colors.white,
-                                            borderRadius: BorderRadius.circular(5),
-                                          ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('탈퇴자',
-                                                style:TextStyle(
-                                                    fontSize:16,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
-                                                ),
-                                              ),
-                                              SizedBox(height:20),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    child: Text('-',
-                                                      style:TextStyle(
-                                                        fontSize:35,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 15,
-                                                      style: TextStyle(
-                                                        fontSize:40,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(Icons.arrow_downward_outlined, color:Color(0xFFFF6868),size:14,),
-                                                      SizedBox(width:3),
-                                                      Container(
-                                                        child: Text('3%',
-                                                          style:TextStyle(
-                                                            fontSize:15,
-                                                            color:Color(0xFFFF6868),
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:10),
-                                                      Container(
-                                                        child: Text('전월대비',
-                                                          style:TextStyle(
-                                                              fontSize:13,
-                                                              fontFamily: 'NanumSquareR',
-                                                              color:Color(0xFF797A7D)
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Padding(
-                                        padding: EdgeInsets.only(
 
-                                          right: MediaQuery.of(context).size.width / 30,
-                                          bottom: MediaQuery.of(context).size.width / 30,
-                                        ),
-                                        child: Container(
-                                          padding: EdgeInsets.only(left:30,right:30,top:20),
-                                          width:400,
-                                          height:180,
+                                              ],
+                                            ),
+                                          )
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.0,),
+                                    Expanded(
+                                      child: Container(
+                                          padding: EdgeInsets.all(5),
+                                          width:300,
+                                          height:350,
                                           decoration:BoxDecoration(
                                             color:Colors.white,
                                             borderRadius: BorderRadius.circular(5),
                                           ),
-                                          child: Column(
-                                            mainAxisAlignment: MainAxisAlignment.start,
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: [
-                                              SizedBox(height:15),
-                                              Text('재 가입자',
-                                                style:TextStyle(
-                                                    fontSize:16,
-                                                    fontFamily: 'NanumSquareB',
-                                                    color:Color(0xFF797A7D)
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text('거래 내역 확인',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                      color: Colors.black,
+                                                      fontFamily: 'NanumSquareEB',
+                                                    )
                                                 ),
-                                              ),
-                                              SizedBox(height:15),
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    child: Text('+',
-                                                      style:TextStyle(
-                                                        fontSize:35,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                    ),
+                                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                                Text('고객과 전문가의 거래 내역을 확인할 수 있습니다',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'NanumSquareR',
                                                   ),
-                                                  SizedBox(width:3),
-                                                  Container(
-                                                    child: McCountingText(
-                                                      begin: 10,
-                                                      end: 255,
-                                                      style: TextStyle(
-                                                        fontSize:40,
-                                                        fontFamily: 'NanumSquareB',
-                                                      ),
-                                                      duration: Duration(seconds: 2),
-                                                      curve: Curves.decelerate,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              SizedBox(height:15),
-                                              Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                                children: [
-                                                  Row(
-                                                    children: [
-                                                      Icon(Icons.arrow_upward_outlined, color:Color(0xFF798BBF),size:14,),
-                                                      SizedBox(width:3),
-                                                      Container(
-                                                        child: Text('5.27%',
-                                                          style:TextStyle(
-                                                            fontSize:15,
-                                                            color:Color(0xFF798BBF),
-                                                            fontFamily: 'NanumSquareB',
-                                                          ),
-                                                        ),
-                                                      ),
-                                                      SizedBox(width:10),
-                                                      Container(
-                                                        child: Text('전월대비',
-                                                          style:TextStyle(
-                                                              fontSize:13,
-                                                              fontFamily: 'NanumSquareR',
-                                                              color:Color(0xFF797A7D)
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+
+                                              ],
+                                            ),
+                                          )
                                       ),
                                     ),
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
                                   ],
                                 ),
+                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                Row(
+                                  children: [
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
+                                    Expanded(
+                                      child: Container(
+                                          padding: EdgeInsets.all(5),
+                                          width:300,
+                                          height:350,
+                                          decoration:BoxDecoration(
+                                            color:Colors.white,
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text('배너 설정',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                      color: Colors.black,
+                                                      fontFamily: 'NanumSquareEB',
+                                                    )
+                                                ),
+                                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                                Text('배너를 변경할 수 있습니다',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'NanumSquareR',
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+
+                                              ],
+                                            ),
+                                          )
+                                      ),
+                                    ),
+                                    SizedBox(width: 10.0,),
+                                    Expanded(
+                                      child: Container(
+                                          padding: EdgeInsets.all(5),
+                                          width:300,
+                                          height:350,
+                                          decoration:BoxDecoration(
+                                            color:Colors.white,
+                                            borderRadius: BorderRadius.circular(5),
+                                          ),
+                                          child: Container(
+                                            margin: EdgeInsets.symmetric(vertical: 50.0, horizontal: 30.0),
+                                            decoration: BoxDecoration(
+                                                borderRadius: BorderRadius.circular(5),
+                                                border: Border.all(width: 1.0, color: Color(0xFFe6e6e6))
+                                            ),
+                                            child: Column(
+                                              mainAxisAlignment: MainAxisAlignment.center,
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              children: [
+                                                Text('기타 설정',
+                                                    style: TextStyle(
+                                                      fontSize: 17.0,
+                                                      color: Colors.black,
+                                                      fontFamily: 'NanumSquareEB',
+                                                    )
+                                                ),
+                                                SizedBox(height: MediaQuery.of(context).size.width / 70,),
+                                                Text('기타 설정을 변경할 수 있습니다',
+                                                  style: TextStyle(
+                                                    fontSize: 15.0,
+                                                    color: Colors.grey,
+                                                    fontFamily: 'NanumSquareR',
+                                                  ),
+                                                  textAlign: TextAlign.center,
+                                                ),
+
+                                              ],
+                                            ),
+                                          )
+                                      ),
+                                    ),
+                                    SizedBox(width: MediaQuery.of(context).size.width / 30,),
+                                  ],
+                                ),
+                                SizedBox(height: MediaQuery.of(context).size.width / 30,),
                               ],
                             ),
                           ),
@@ -1523,3 +1348,4 @@ class _SettingPageState extends State<SettingPage> {
     );
   }
 }
+

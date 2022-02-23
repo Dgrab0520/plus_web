@@ -8,6 +8,7 @@ import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mccounting_text/mccounting_text.dart';
 import 'package:plus_web/admin/admini_main_page.dart';
+import 'package:plus_web/admin/login_page.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -186,7 +187,7 @@ class _MainPageState extends State<MainPage> {
                       SizedBox(height: 30),
                       InkWell(
                         onTap: () {
-                          Get.to(AdminPage());
+                          Get.to(LoginPage());
                         },
                         child: Container(
                           width: 130,
@@ -1225,7 +1226,9 @@ class _MainPageState extends State<MainPage> {
                               )),
                           SizedBox(height: 30),
                           InkWell(
-                            onTap: () {},
+                            onTap: () {
+                              Get.to(LoginPage());
+                            },
                             child: Container(
                               width: 130,
                               height: 35,

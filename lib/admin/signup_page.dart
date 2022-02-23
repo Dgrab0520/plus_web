@@ -1,8 +1,8 @@
-
+import 'package:plus_web/admin/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:plus_web/admin/login_page.dart';
 
+import 'main_page.dart';
 
 class Sign_Up extends StatefulWidget {
   const Sign_Up({Key? key}) : super(key: key);

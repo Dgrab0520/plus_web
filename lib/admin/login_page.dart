@@ -1,8 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:plus_web/admin/admini_main_page.dart';
-import 'package:plus_web/admin/signup_page.dart';
+import 'package:plus_web/admin/main_page.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -136,28 +135,28 @@ class _LoginPageState extends State<LoginPage> {
                         ),
                       ),
                     ),
-                    SizedBox(height:10),
-                    Container(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          InkWell(
-                              onTap: () {
-                                Get.to(Sign_Up());
-                              },
-                              child: Text('회원가입',
-                                style: TextStyle(
-                                  fontSize:12,
-                                ),
-                              )),
-                        ],
-                      ),
-                    ),
+                    // SizedBox(height:10),
+                    // Container(
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     crossAxisAlignment: CrossAxisAlignment.center,
+                    //     children: [
+                    //       InkWell(
+                    //           onTap: () {
+                    //             Get.to(Sign_Up());
+                    //           },
+                    //           child: Text('회원가입',
+                    //             style: TextStyle(
+                    //               fontSize:12,
+                    //             ),
+                    //           )),
+                    //     ],
+                    //   ),
+                    // ),
                     SizedBox(height: 30),
                     InkWell(
                       onTap: () {
-                        Get.to(AdminPage());
+                        Get.to(MainPage());
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
