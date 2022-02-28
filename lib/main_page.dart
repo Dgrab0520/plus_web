@@ -261,11 +261,11 @@ class _MainPageState extends State<MainPage> {
       Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                "assets/img6.jpg",
-              ),
-            )),
+          fit: BoxFit.cover,
+          image: AssetImage(
+            "assets/img6.jpg",
+          ),
+        )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -326,306 +326,414 @@ class _MainPageState extends State<MainPage> {
           ],
         ),
       ),
+      // Container(
+      //   decoration: BoxDecoration(
+      //       image: DecorationImage(
+      //         fit: BoxFit.cover,
+      //         image: AssetImage(
+      //           "assets/img6.jpg",
+      //         ),
+      //       )),
+      //   child: Column(
+      //     children: [
+      //       Container(
+      //         width:2000,
+      //         height:200,
+      //         decoration:BoxDecoration(
+      //           color: Color(0xFF025595),
+      //         ),
+      //         child: Container(
+      //           padding: EdgeInsets.only(top:50,),
+      //           child: Column(
+      //             mainAxisAlignment: MainAxisAlignment.start,
+      //             crossAxisAlignment: CrossAxisAlignment.center,
+      //             children: [
+      //               Text(
+      //                 '어디에도 없는',
+      //                 style: TextStyle(
+      //                   color: Colors.white,
+      //                   fontSize: 40,
+      //                   fontFamily: 'NanumSquareEB',
+      //                 ),
+      //               ),
+      //               SizedBox(height: 10),
+      //               Text(
+      //                 '홈케어 올인원 서비스 +',
+      //                 style: TextStyle(
+      //                   color: Colors.white,
+      //                   fontSize: 40,
+      //                   fontFamily: 'NanumSquareEB',
+      //                 ),
+      //               ),
+      //             ],
+      //           ),
+      //         ),
+      //       ),
+      //       Container(
+      //         margin: EdgeInsets.all(50),
+      //         width:Get.width,
+      //         child: Column(
+      //           children: [
+      //             Row(
+      //               children: [
+      //                 Expanded(
+      //                   child: Container(
+      //                     color: Color(0xffffffff),
+      //                     child: Container(
+      //                       width:1800,
+      //                       padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
+      //                       decoration: BoxDecoration(
+      //                         color: Colors.white,
+      //                         boxShadow: [
+      //                           BoxShadow(
+      //                             color: Colors.grey.withOpacity(0.5),
+      //                             spreadRadius: 3,
+      //                             blurRadius: 7,
+      //                             offset: Offset(0, 3), // changes position of shadow
+      //                           ),
+      //                         ],
+      //                         borderRadius: BorderRadius.circular(20),
+      //                       ),
+      //                       child: Column(
+      //                         mainAxisAlignment: MainAxisAlignment.center,
+      //                         crossAxisAlignment: CrossAxisAlignment.center,
+      //                         children: [
+      //                           Row(
+      //                             mainAxisAlignment: MainAxisAlignment.center,
+      //                             crossAxisAlignment: CrossAxisAlignment.center,
+      //                             children: [
+      //                               Text(
+      //                                 '전문가 매칭',
+      //                                 style: TextStyle(
+      //                                   color: Color(0xFf025595),
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                               SizedBox(width: 5),
+      //                               Text(
+      //                                 '서비스',
+      //                                 style: TextStyle(
+      //                                   color: Colors.black,
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                           SizedBox(height: 10),
+      //                           Text(
+      //                             '원하시는 서비스 견적신청을 해주시면 견적서에 맞춰 파트너를 매칭 또는 추천 해드립니다.',
+      //                             style: TextStyle(
+      //                               height: 1.5,
+      //                               fontSize: 13,
+      //                               fontFamily: 'NanumSquareR',
+      //                             ),
+      //                             textAlign: TextAlign.center,
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //                 SizedBox(width:50),
+      //                 Expanded(
+      //                   child: Container(
+      //                     color: Color(0xffffffff),
+      //                     child: Container(
+      //                       padding: EdgeInsets.all(50),
+      //                       decoration: BoxDecoration(
+      //                         color: Colors.white,
+      //                         boxShadow: [
+      //                           BoxShadow(
+      //                             color: Colors.grey.withOpacity(0.5),
+      //                             spreadRadius: 3,
+      //                             blurRadius: 7,
+      //                             offset: Offset(0, 3), // changes position of shadow
+      //                           ),
+      //                         ],
+      //                         borderRadius: BorderRadius.circular(20),
+      //                       ),
+      //                       child: Column(
+      //                         mainAxisAlignment: MainAxisAlignment.center,
+      //                         crossAxisAlignment: CrossAxisAlignment.center,
+      //                         children: [
+      //                           Row(
+      //                             mainAxisAlignment: MainAxisAlignment.center,
+      //                             crossAxisAlignment: CrossAxisAlignment.center,
+      //                             children: [
+      //                               Text(
+      //                                 '올인원 케어',
+      //                                 style: TextStyle(
+      //                                   color: Color(0xFf025595),
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                               SizedBox(width: 5),
+      //                               Text(
+      //                                 '서비스',
+      //                                 style: TextStyle(
+      //                                   color: Colors.black,
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                           SizedBox(height: 10),
+      //                           Text(
+      //                             '청소, 인테리어, 렌탈 서비스 등등 복잡한 과정들을 한 번에 입주플러스에서 해결하세요!',
+      //                             style: TextStyle(
+      //                               height: 1.5,
+      //                               fontSize: 13,
+      //                               fontFamily: 'NanumSquareR',
+      //                             ),
+      //                             textAlign: TextAlign.center,
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //             SizedBox(height:30),
+      //             Row(
+      //               children: [
+      //                 Expanded(
+      //                   child: Container(
+      //                     color: Color(0xffffffff),
+      //                     child: Container(
+      //                       padding: EdgeInsets.all(50),
+      //                       decoration: BoxDecoration(
+      //                         color: Colors.white,
+      //                         boxShadow: [
+      //                           BoxShadow(
+      //                             color: Colors.grey.withOpacity(0.5),
+      //                             spreadRadius: 3,
+      //                             blurRadius: 7,
+      //                             offset: Offset(0, 3), // changes position of shadow
+      //                           ),
+      //                         ],
+      //                         borderRadius: BorderRadius.circular(20),
+      //                       ),
+      //                       child: Column(
+      //                         mainAxisAlignment: MainAxisAlignment.center,
+      //                         crossAxisAlignment: CrossAxisAlignment.center,
+      //                         children: [
+      //                           Row(
+      //                             mainAxisAlignment: MainAxisAlignment.center,
+      //                             crossAxisAlignment: CrossAxisAlignment.center,
+      //                             children: [
+      //                               Text(
+      //                                 '합리적 금액',
+      //                                 style: TextStyle(
+      //                                   color: Color(0xFf025595),
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                               SizedBox(width: 5),
+      //                               Text(
+      //                                 '서비스',
+      //                                 style: TextStyle(
+      //                                   color: Colors.black,
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                           SizedBox(height: 10),
+      //                           Text(
+      //                             '입주플러스 파트너들은 합리적인 가격으로 예상견적을 보내드립니다.',
+      //                             style: TextStyle(
+      //                               height: 1.5,
+      //                               fontSize: 13,
+      //                               fontFamily: 'NanumSquareR',
+      //                             ),
+      //                             textAlign: TextAlign.center,
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //                 SizedBox(width:50),
+      //                 Expanded(
+      //                   child: Container(
+      //                     color: Color(0xffffffff),
+      //                     child: Container(
+      //                       padding: EdgeInsets.all(50),
+      //                       decoration: BoxDecoration(
+      //                         color: Colors.white,
+      //                         boxShadow: [
+      //                           BoxShadow(
+      //                             color: Colors.grey.withOpacity(0.5),
+      //                             spreadRadius: 3,
+      //                             blurRadius: 7,
+      //                             offset: Offset(0, 3), // changes position of shadow
+      //                           ),
+      //                         ],
+      //                         borderRadius: BorderRadius.circular(20),
+      //                       ),
+      //                       child: Column(
+      //                         mainAxisAlignment: MainAxisAlignment.center,
+      //                         crossAxisAlignment: CrossAxisAlignment.center,
+      //                         children: [
+      //                           Row(
+      //                             mainAxisAlignment: MainAxisAlignment.center,
+      //                             crossAxisAlignment: CrossAxisAlignment.center,
+      //                             children: [
+      //                               Text(
+      //                                 '예상 견적',
+      //                                 style: TextStyle(
+      //                                   color: Color(0xFf025595),
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                               SizedBox(width: 5),
+      //                               Text(
+      //                                 '서비스',
+      //                                 style: TextStyle(
+      //                                   color: Colors.black,
+      //                                   fontFamily: 'NanumSquareEB',
+      //                                   fontSize: 25,
+      //                                 ),
+      //                               ),
+      //                             ],
+      //                           ),
+      //                           SizedBox(height: 10),
+      //                           Text(
+      //                             '파트너들의 예상 견적 서비스를 상담 전에 한 번에 받아 보세요!',
+      //                             style: TextStyle(
+      //                               height: 1.5,
+      //                               fontSize: 13,
+      //                               fontFamily: 'NanumSquareR',
+      //                             ),
+      //                             textAlign: TextAlign.center,
+      //                           ),
+      //                         ],
+      //                       ),
+      //                     ),
+      //                   ),
+      //                 ),
+      //               ],
+      //             ),
+      //           ],
+      //         ),
+      //       ),
+      //     ],
+      //   ),
+      // ),
       Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                "assets/img6.jpg",
-              ),
-            )),
-        child: Column(
-          children: [
-            Container(
-              width:2000,
-              height:200,
-              decoration:BoxDecoration(
-                color: Color(0xFF025595),
-              ),
-              child: Container(
-                padding: EdgeInsets.only(top:50,),
+        color: Colors.white,
+        child: FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset('iphone.png'),
+              Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '어디에도 없는',
+                      '입주플러스에서만',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
+                        fontSize: 50,
+                        color: Colors.black,
                         fontFamily: 'NanumSquareEB',
                       ),
                     ),
                     SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          '볼 수 있는 ',
+                          style: TextStyle(
+                            fontSize: 50,
+                            color: Colors.black,
+                            fontFamily: 'NanumSquareEB',
+                          ),
+                        ),
+                        Text(
+                          '올인원 케어 서비스+',
+                          style: TextStyle(
+                            fontSize: 50,
+                            color: Colors.black,
+                            fontFamily: 'NanumSquareEB',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 50),
                     Text(
-                      '홈케어 올인원 서비스 +',
+                      '청소, 인테리어, 렌탈 서비스 등등 복잡한 과정들을',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 40,
-                        fontFamily: 'NanumSquareEB',
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontFamily: 'NanumSquareR',
                       ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '입주플러스에서 한번에 해결하세요!',
+                      style: TextStyle(
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontFamily: 'NanumSquareR',
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                    Row(
+                      children: [
+                        Container(
+                          width: 140,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF025595),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Center(
+                            child: Text(
+                              '#입주플러스',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'NanumSquareB',
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        Container(
+                          width: 140,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF025595),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Center(
+                            child: Text(
+                              '#올인원케어',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'NanumSquareB',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ),
-            Container(
-              margin: EdgeInsets.all(50),
-              width:Get.width,
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            width:1800,
-                            padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '전문가 매칭',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '원하시는 서비스 견적신청을 해주시면 견적서에 맞춰 파트너를 매칭 또는 추천 해드립니다.',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 13,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width:50),
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            padding: EdgeInsets.all(50),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '올인원 케어',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '청소, 인테리어, 렌탈 서비스 등등 복잡한 과정들을 한 번에 입주플러스에서 해결하세요!',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 13,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height:30),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            padding: EdgeInsets.all(50),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '합리적 금액',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '입주플러스 파트너들은 합리적인 가격으로 예상견적을 보내드립니다.',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 13,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width:50),
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            padding: EdgeInsets.all(50),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '예상 견적',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 25,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '파트너들의 예상 견적 서비스를 상담 전에 한 번에 받아 보세요!',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 13,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+              SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
       Container(
@@ -745,11 +853,11 @@ class _MainPageState extends State<MainPage> {
       Container(
         decoration: BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                "assets/img6.jpg",
-              ),
-            )),
+          fit: BoxFit.cover,
+          image: AssetImage(
+            "assets/img6.jpg",
+          ),
+        )),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -820,305 +928,111 @@ class _MainPageState extends State<MainPage> {
         ),
       ),
       Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-              fit: BoxFit.cover,
-              image: AssetImage(
-                "assets/img6.jpg",
-              ),
-            )),
-        child: Column(
-          children: [
-            Container(
-              width:1800,
-              height:200,
-              decoration:BoxDecoration(
-                color: Color(0xFF025595),
-              ),
-              child: Container(
-                padding: EdgeInsets.only(top:50,bottom:50,left:20,right:20),
+        color: Colors.white,
+        child: FittedBox(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset('iphone.png'),
+              Container(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      '어디에도 없는',
+                      '입주플러스에서만',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
+                        fontSize: 50,
+                        color: Colors.black,
                         fontFamily: 'NanumSquareEB',
                       ),
                     ),
                     SizedBox(height: 10),
+                    Row(
+                      children: [
+                        Text(
+                          '볼 수 있는 ',
+                          style: TextStyle(
+                            fontSize: 50,
+                            color: Colors.black,
+                            fontFamily: 'NanumSquareEB',
+                          ),
+                        ),
+                        Text(
+                          '올인원 케어 서비스+',
+                          style: TextStyle(
+                            fontSize: 50,
+                            color: Colors.black,
+                            fontFamily: 'NanumSquareEB',
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 50),
                     Text(
-                      '홈케어 올인원 서비스 +',
+                      '청소, 인테리어, 렌탈 서비스 등등 복잡한 과정들을',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 30,
-                        fontFamily: 'NanumSquareEB',
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontFamily: 'NanumSquareR',
                       ),
+                    ),
+                    SizedBox(height: 10),
+                    Text(
+                      '입주플러스에서 한번에 해결하세요!',
+                      style: TextStyle(
+                        fontSize: 27,
+                        color: Colors.black,
+                        fontFamily: 'NanumSquareR',
+                      ),
+                    ),
+                    SizedBox(height: 40),
+                    Row(
+                      children: [
+                        Container(
+                          width: 140,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF025595),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Center(
+                            child: Text(
+                              '#입주플러스',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'NanumSquareB',
+                              ),
+                            ),
+                          ),
+                        ),
+                        SizedBox(width: 15),
+                        Container(
+                          width: 140,
+                          height: 45,
+                          decoration: BoxDecoration(
+                              color: Color(0xFF025595),
+                              borderRadius: BorderRadius.circular(5)),
+                          child: Center(
+                            child: Text(
+                              '#올인원케어',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontFamily: 'NanumSquareB',
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top:30, left:15, right:15, bottom:15),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            width:1800,
-                            padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '전문가 매칭',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '원하시는 서비스 견적 신청을 해주시면 견적서에 맞춰 파트너를 매칭 또는 추천 해드립니다.',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 12,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width:15),
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '올인원 케어',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '청소, 인테리어, 렌탈 서비스 등등 복잡한 과정들을 한 번에 입주플러스에서 해결하세요!',
-
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 12,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  SizedBox(height:30),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '합리적 금액',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '입주플러스 파트너들은 체계적이고 합리적인 가격으로 예상 견적을 고객님들께 보내드립니다.',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 12,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(width:15),
-                      Expanded(
-                        child: Container(
-                          color: Color(0xffffffff),
-                          child: Container(
-                            padding: EdgeInsets.only(top:30, left:15, right:15, bottom:30),
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                  color: Colors.grey.withOpacity(0.5),
-                                  spreadRadius: 3,
-                                  blurRadius: 7,
-                                  offset: Offset(0, 3), // changes position of shadow
-                                ),
-                              ],
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '예상 견적',
-                                      style: TextStyle(
-                                        color: Color(0xFf025595),
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    SizedBox(width: 5),
-                                    Text(
-                                      '서비스',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontFamily: 'NanumSquareEB',
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 10),
-                                Text(
-                                  '파트너들의 예상 견적 서비스를 채팅으로 상담하기 전 한 번에 받아 한눈에 확인 해보세요!',
-                                  style: TextStyle(
-                                    height: 1.5,
-                                    fontSize: 12,
-                                    fontFamily: 'NanumSquareR',
-                                  ),
-                                  textAlign: TextAlign.center,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),
-          ],
+              SizedBox(height: 30),
+            ],
+          ),
         ),
       ),
       Container(
