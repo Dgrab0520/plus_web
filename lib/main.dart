@@ -24,21 +24,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       scrollBehavior: AppScrollBehavior(),
-      title: 'Flutter Demo',
+      title: '입주 플러스', //타이틀
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        // This is the theme of your application.
-        //
-        // Try running your application with "flutter run". You'll see the
-        // application has a blue toolbar. Then, without quitting the app, try
-        // changing the primarySwatch below to Colors.green and then invoke
-        // "hot reload" (press "r" in the console where you ran "flutter run",
-        // or simply save your changes to "hot reload" in a Flutter IDE).
-        // Notice that the counter didn't reset back to zero; the application
-        // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: MainPage(),
+      home: const MainPage(),
+      getPages: [
+        GetPage(
+            name: '/', page: () => const MainPage()), //관리자 페이지에서 홈페이지로 하기위한 페이징
+      ],
     );
   }
 }

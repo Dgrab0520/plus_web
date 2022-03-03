@@ -615,6 +615,16 @@ class _PartnerPageState extends State<PartnerPage> {
                       ),
                     ),
                   )),
+                  InkWell(
+                      //초기 홈페이지
+                      onTap: () {
+                        print("main");
+                        Get.toNamed('/');
+                      },
+                      child: const Icon(
+                        CupertinoIcons.home,
+                        color: Colors.white,
+                      )),
                 ],
               ),
             ),

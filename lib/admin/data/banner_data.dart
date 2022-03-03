@@ -20,8 +20,8 @@ class Banner_Data extends GetxController {
   static const BANNER_DELETE_ACTION = "BANNER_DELETE_ACTION";
   static const BANNER_UPDATE_ACTION = "BANNER_UPDATE_ACTION";
 
-  final _bannerMain = <Banners>[].obs;
-  final _bannerSub = <Banners>[].obs;
+  final _bannerMain = <Banners>[].obs; //메인 배너
+  final _bannerSub = <Banners>[].obs; //서브 배너
 
   get bannerMain => _bannerMain;
   set bannerMain(val) => _bannerMain.value = val;
@@ -38,6 +38,7 @@ class Banner_Data extends GetxController {
   get isSubLoading => _isSubLoading.value;
   set isSubLoading(val) => _isSubLoading.value = val;
 
+  //메인 배너 불러오기
   getBanner_Main() async {
     try {
       var map = <String, dynamic>{};
@@ -56,6 +57,7 @@ class Banner_Data extends GetxController {
     }
   }
 
+  //서브 배너 불러오기
   getBanner_Sub() async {
     try {
       var map = <String, dynamic>{};

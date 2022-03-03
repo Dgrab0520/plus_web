@@ -9,21 +9,21 @@ import 'package:plus_web/admin/model/banner_model.dart';
 
 class BannerAdd extends StatefulWidget {
   const BannerAdd({Key? key, required this.type}) : super(key: key);
-  final String type;
+  final String type; //배너 타입 [main, sub]
 
   @override
   _BannerAddState createState() => _BannerAddState();
 }
 
 class _BannerAddState extends State<BannerAdd> {
-  Uint8List? bannerImage;
+  Uint8List? bannerImage; //배너 이미지
   Widget selectedImage = Container(
     height: 180,
     width: 320,
     alignment: Alignment.center,
     color: Colors.grey.withOpacity(0.3),
     child: const Icon(CupertinoIcons.add_circled),
-  );
+  ); //화면에 표시되는 이미지
 
   TextEditingController titleController = TextEditingController();
   TextEditingController contentController = TextEditingController();

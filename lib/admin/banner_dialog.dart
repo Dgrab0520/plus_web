@@ -12,8 +12,8 @@ class BannerDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    bannerController.getBanner_Main();
-    bannerController.getBanner_Sub();
+    bannerController.getBanner_Main(); //메인 배너 불러오기
+    bannerController.getBanner_Sub(); //서브 배너 불러오기
     return AlertDialog(
       content: SizedBox(
         width: Get.width,
@@ -39,6 +39,7 @@ class BannerDialog extends StatelessWidget {
                         type: "main",
                       ));
                       if (result != null) {
+                        //배너 추가 성공시 메인 배너 리프레쉬
                         bannerController.getBanner_Main();
                       }
                     },
@@ -63,11 +64,13 @@ class BannerDialog extends StatelessWidget {
                       itemCount: bannerController.bannerMain.length,
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
+                          //배너 클릭시 배너 업데이트 창
                           onTap: () async {
                             var result = await Get.dialog(BannerEdit(
                               banners: bannerController.bannerMain[index],
                             ));
                             if (result != null) {
+                              //배너 업데이트 성공시 메인 배너 리프레쉬
                               bannerController.getBanner_Main();
                             }
                           },
@@ -84,7 +87,7 @@ class BannerDialog extends StatelessWidget {
                                   Text(
                                     bannerController
                                         .bannerMain[index].banner_title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'NanumSquareEB',
                                       fontSize: 12,
                                     ),
@@ -92,7 +95,7 @@ class BannerDialog extends StatelessWidget {
                                   Text(
                                     bannerController
                                         .bannerMain[index].banner_sub,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'NanumSquareR',
                                       fontSize: 12,
                                     ),
@@ -123,6 +126,7 @@ class BannerDialog extends StatelessWidget {
                         type: "sub",
                       ));
                       if (result != null) {
+                        //배너 추가 성공시 서브 배너 리프레쉬
                         bannerController.getBanner_Sub();
                       }
                     },
@@ -147,10 +151,12 @@ class BannerDialog extends StatelessWidget {
                       itemCount: bannerController.bannerSub.length,
                       itemBuilder: (BuildContext context, int index) {
                         return InkWell(
+                          //배너 클릭시 서브 배너 업데이트 창
                           onTap: () async {
                             var result = await Get.dialog(BannerEdit(
                                 banners: bannerController.bannerSub[index]));
                             if (result != null) {
+                              //배너 업데이트 성공시 서브 배너 리프레쉬
                               bannerController.getBanner_Sub();
                             }
                           },
@@ -167,7 +173,7 @@ class BannerDialog extends StatelessWidget {
                                   Text(
                                     bannerController
                                         .bannerSub[index].banner_title,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'NanumSquareEB',
                                       fontSize: 12,
                                     ),
@@ -175,7 +181,7 @@ class BannerDialog extends StatelessWidget {
                                   Text(
                                     bannerController
                                         .bannerSub[index].banner_sub,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       fontFamily: 'NanumSquareR',
                                       fontSize: 12,
                                     ),

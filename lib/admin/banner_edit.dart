@@ -184,7 +184,7 @@ class _BannerEditState extends State<BannerEdit> {
                       ),
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 10,
                   ),
                   Expanded(
@@ -237,7 +237,8 @@ class _BannerEditState extends State<BannerEdit> {
   }
 
   selectImage() async {
-    bannerImage = await ImagePickerWeb.getImageAsBytes();
+    //이미지 찾기
+    bannerImage = await ImagePickerWeb.getImageAsBytes(); //이미지 한개 byte로 불러오기
     if (bannerImage == null) {
       Get.snackbar("실패", "파일 불러오기를 실패했습니다 다시 시도해주세요");
     }
@@ -255,7 +256,7 @@ class _BannerEditState extends State<BannerEdit> {
               image: DecorationImage(
             image: MemoryImage(bannerImage!),
           )),
-        );
+        ); //화면에 표시되는 이미지
       });
     }
   }
