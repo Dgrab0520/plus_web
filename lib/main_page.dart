@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:mccounting_text/mccounting_text.dart';
-import 'package:plus_web/admin/admini_main_page.dart';
 import 'package:plus_web/admin/login_page.dart';
 
 class MainPage extends StatefulWidget {
@@ -23,47 +22,16 @@ class _MainPageState extends State<MainPage> {
   List<Widget> slide2 = [];
 
   bool isFooter = false;
+  bool isEnd = true;
 
   @override
   void initState() {
     super.initState();
     getList();
-
-    _controller.addListener(() {
-      print(_controller.position.userScrollDirection);
-      if (_controller.position.userScrollDirection == ScrollDirection.forward) {
-        if (_controller.page! > 0) {
-          if (_controller.page! > 2 && isFooter) {
-            setState(() {
-              isFooter = false;
-            });
-          }
-        }
-      } else {
-        if (_controller.page! == 3 && !isFooter) {
-          setState(() {
-            isFooter = true;
-          });
-        }
-      }
-    });
   }
 
   @override
   Widget build(BuildContext context) {
-    if (MediaQuery.of(context).size.width < 920) {
-      top = Container(
-        margin: EdgeInsets.only(bottom: 20.0),
-        child: Row(
-          children: [],
-        ),
-      );
-    } else {
-      top = Row(
-        children: [],
-      );
-    }
-    printError();
     //print(_controller.offset);
     return Scaffold(
       body: SafeArea(
@@ -88,15 +56,6 @@ class _MainPageState extends State<MainPage> {
                     ),
                   ],
                 )),
-                Expanded(
-                  flex: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      top,
-                    ],
-                  ),
-                ),
               ],
             ),
           ),
@@ -104,33 +63,35 @@ class _MainPageState extends State<MainPage> {
             flex: 9,
             child: Listener(
               onPointerSignal: (event) {
-                if (event is PointerScrollEvent) {
-                  print(event.scrollDelta..dy);
-                  setState(() {
-                    if (event.scrollDelta.dy < 0) {
-                      if (_controller.page! > 0) {
-                        if (_controller.page! == 3 && isFooter) {
-                          setState(() {
-                            isFooter = false;
-                          });
-                        } else {
-                          _controller.previousPage(
+                if (MediaQuery.of(context).size.width > 1200) {
+                  if (event is PointerScrollEvent) {
+                    print(event.scrollDelta..dy);
+                    setState(() {
+                      if (event.scrollDelta.dy < 0) {
+                        if (_controller.page! > 0) {
+                          if (_controller.page! == 3 && isFooter) {
+                            setState(() {
+                              isFooter = false;
+                            });
+                          } else {
+                            _controller.previousPage(
+                                duration: Duration(milliseconds: 300),
+                                curve: Curves.easeIn);
+                          }
+                        }
+                      } else {
+                        if (_controller.page! < 3) {
+                          _controller.nextPage(
                               duration: Duration(milliseconds: 300),
                               curve: Curves.easeIn);
+                        } else if (_controller.page! == 3 && !isFooter) {
+                          setState(() {
+                            isFooter = true;
+                          });
                         }
                       }
-                    } else {
-                      if (_controller.page! < 3) {
-                        _controller.nextPage(
-                            duration: Duration(milliseconds: 300),
-                            curve: Curves.easeIn);
-                      } else if (_controller.page! == 3 && !isFooter) {
-                        setState(() {
-                          isFooter = true;
-                        });
-                      }
-                    }
-                  });
+                    });
+                  }
                 }
               },
               child: PageView.builder(
@@ -151,6 +112,12 @@ class _MainPageState extends State<MainPage> {
             ),
           ),
           AnimatedContainer(
+              onEnd: () {
+                print("end");
+                setState(() {
+                  isEnd = true;
+                });
+              },
               duration: Duration(milliseconds: 500),
               color: Colors.black45,
               height: isFooter ? 255 : 0,
@@ -1035,139 +1002,166 @@ class _MainPageState extends State<MainPage> {
           ),
         ),
       ),
-      Container(
-        color: Colors.white,
-        child: FittedBox(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  McCountingText(
-                    begin: 10,
-                    end: 1000,
+      GestureDetector(
+        onVerticalDragUpdate: (details) {
+          if (isEnd) {
+            if (details.delta.dy < 0) {
+              print("down");
+              if (!isFooter) {
+                setState(() {
+                  isEnd = false;
+                  isFooter = true;
+                });
+              }
+            } else {
+              print("up");
+              if (isFooter) {
+                setState(() {
+                  isEnd = false;
+                  isFooter = false;
+                });
+              } else {
+                _controller.previousPage(
+                    duration: Duration(milliseconds: 300),
+                    curve: Curves.easeInOut);
+              }
+            }
+          }
+        },
+        child: Container(
+          color: Colors.white,
+          child: FittedBox(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    McCountingText(
+                      begin: 10,
+                      end: 1000,
+                      style: TextStyle(
+                          fontSize: 60,
+                          fontFamily: 'Jalnan',
+                          color: Color(0xFf025595)),
+                      duration: Duration(seconds: 2),
+                      curve: Curves.decelerate,
+                    ),
+                    Text(
+                      '+',
+                      style: TextStyle(
+                          color: Color(0xFF025595),
+                          fontSize: 60,
+                          fontFamily: 'Jalnan'),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Container(
+                  child: Text(
+                    '누적 다운로드 수',
                     style: TextStyle(
-                        fontSize: 60,
-                        fontFamily: 'Jalnan',
-                        color: Color(0xFf025595)),
-                    duration: Duration(seconds: 2),
-                    curve: Curves.decelerate,
-                  ),
-                  Text(
-                    '+',
-                    style: TextStyle(
-                        color: Color(0xFF025595),
-                        fontSize: 60,
-                        fontFamily: 'Jalnan'),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20),
-              Container(
-                child: Text(
-                  '누적 다운로드 수',
-                  style: TextStyle(
-                    fontSize: 23,
-                    color: Colors.black,
-                    fontFamily: 'NanumSquareEB',
+                      fontSize: 23,
+                      color: Colors.black,
+                      fontFamily: 'NanumSquareEB',
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 40),
-              Container(
-                child: Image.asset('assets/download.png'),
-              ),
-              SizedBox(height: 40),
-              InkWell(
-                onTap: () {},
-                child: Container(
-                  width: 180,
-                  height: 50,
-                  decoration: BoxDecoration(
-                    color: Color(0xFF025595),
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: Center(
-                    child: Text(
-                      '다운로드 하러가기',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontFamily: 'NanumSquareB',
+                SizedBox(height: 40),
+                Container(
+                  child: Image.asset('assets/download.png'),
+                ),
+                SizedBox(height: 40),
+                InkWell(
+                  onTap: () {},
+                  child: Container(
+                    width: 180,
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Color(0xFF025595),
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Center(
+                      child: Text(
+                        '다운로드 하러가기',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                          fontFamily: 'NanumSquareB',
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Container(
-                  color: Colors.black45,
-                  height: isFooter ? 255 : 0,
-                  child: Container(
-                    width: Get.width,
-                    padding: EdgeInsets.all(30),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            '대표자 | 최현성',
-                            style: TextStyle(
-                              color: Colors.white,
+                SizedBox(
+                  height: 10,
+                ),
+                Container(
+                    color: Colors.black45,
+                    height: isFooter ? 255 : 0,
+                    child: Container(
+                      width: Get.width,
+                      padding: EdgeInsets.all(30),
+                      child: SingleChildScrollView(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              '대표자 | 최현성',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10),
-                          Text(
-                              '주소 | 경기도 안양시 동안구 시민대로 327번길 11-41 (관악동 1744) 안양 창업 지원센터 3층 3133호',
-                              style: TextStyle(
-                                color: Colors.white,
-                              )),
-                          SizedBox(height: 10),
-                          Text('TEL | 1533-1196',
-                              style: TextStyle(
-                                color: Colors.white,
-                              )),
-                          SizedBox(height: 10),
-                          Text('사업자 등록번호 | 285-05-02282',
-                              style: TextStyle(
-                                color: Colors.white,
-                              )),
-                          SizedBox(height: 30),
-                          InkWell(
-                            onTap: () {
-                              Get.to(LoginPage());
-                            },
-                            child: Container(
-                              width: 130,
-                              height: 35,
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(5),
-                                  border: Border.all(
-                                    width: 1,
-                                    color: Colors.white,
-                                  )),
-                              child: Center(
-                                child: Text(
-                                  '관리자 페이지',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 15,
+                            SizedBox(height: 10),
+                            Text(
+                                '주소 | 경기도 안양시 동안구 시민대로 327번길 11-41 (관악동 1744) 안양 창업 지원센터 3층 3133호',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                )),
+                            SizedBox(height: 10),
+                            Text('TEL | 1533-1196',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                )),
+                            SizedBox(height: 10),
+                            Text('사업자 등록번호 | 285-05-02282',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                )),
+                            SizedBox(height: 30),
+                            InkWell(
+                              onTap: () {
+                                Get.to(LoginPage());
+                              },
+                              child: Container(
+                                width: 130,
+                                height: 35,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(5),
+                                    border: Border.all(
+                                      width: 1,
+                                      color: Colors.white,
+                                    )),
+                                child: Center(
+                                  child: Text(
+                                    '관리자 페이지',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
-                    ),
-                  )),
-            ],
+                    )),
+              ],
+            ),
           ),
         ),
       ),
