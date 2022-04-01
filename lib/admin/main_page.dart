@@ -121,7 +121,8 @@ class _MainPageState extends State<MainPage> {
                       ),
                     ),
                   )),
-                  InkWell( //최초 홈페이지로
+                  InkWell(
+                      //최초 홈페이지로
                       onTap: () {
                         print("main");
                         Get.toNamed('/');
@@ -594,7 +595,8 @@ class _MainPageState extends State<MainPage> {
                                       EdgeInsets.only(right: Get.width / 30),
                                   child: TextField(
                                     controller: searchController,
-                                    onSubmitted: (text) { //검색
+                                    onSubmitted: (text) {
+                                      //검색
                                       searchResult = [];
                                       print(text);
                                       searchResult.addAll(detail.where(
@@ -619,7 +621,8 @@ class _MainPageState extends State<MainPage> {
                                             Radius.circular(10)),
                                       ),
                                       suffixIcon: InkWell(
-                                        onTap: () { //검색
+                                        onTap: () {
+                                          //검색
                                           searchResult = [];
                                           print(searchController.text);
                                           searchResult.addAll(detail.where(
@@ -1171,7 +1174,171 @@ class _MainPageState extends State<MainPage> {
                                                     SizedBox(width: 10),
                                                     Expanded(
                                                       child: InkWell(
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          TextEditingController
+                                                              pointController =
+                                                              TextEditingController();
+                                                          pointController.text =
+                                                              searchResult[
+                                                                      index]
+                                                                  .point;
+                                                          Get.defaultDialog(
+                                                              title: "고객 수정",
+                                                              content: Column(
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "아이디 : ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'NanumSquareB',
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        searchResult[index]
+                                                                            .cus_id,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontFamily:
+                                                                              'NanumSquareR',
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "추천인코드 : ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'NanumSquareB',
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        searchResult[index]
+                                                                            .cus_recom,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontFamily:
+                                                                              'NanumSquareR',
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "포인트 : ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'NanumSquareB',
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        width:
+                                                                            180,
+                                                                        margin: EdgeInsets.only(
+                                                                            right:
+                                                                                Get.width / 30),
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              pointController,
+                                                                          decoration: InputDecoration(
+                                                                              hintText: "0",
+                                                                              hintStyle: TextStyle(
+                                                                                fontSize: 12.0,
+                                                                                fontFamily: 'NanumSquareB',
+                                                                              ),
+                                                                              fillColor: Color(0xFF2A2D3E).withOpacity(0.1),
+                                                                              filled: true,
+                                                                              border: OutlineInputBorder(
+                                                                                borderSide: BorderSide.none,
+                                                                                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                              ),
+                                                                              isDense: true,
+                                                                              contentPadding: EdgeInsets.all(8),
+                                                                              suffixText: "포인트"),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      Customer_Data.updatePoint(
+                                                                              searchResult[index].cus_id,
+                                                                              pointController.text)
+                                                                          .then((value) {
+                                                                        if (value) {
+                                                                          setState(
+                                                                              () {
+                                                                            searchResult[index].point =
+                                                                                pointController.text;
+                                                                          });
+                                                                          Get.back();
+                                                                          Get.snackbar(
+                                                                              "성공",
+                                                                              "고객 정보를 성공적으로 수정했습니다");
+                                                                        } else {
+                                                                          if (!Get
+                                                                              .isSnackbarOpen) {
+                                                                            Get.snackbar("실패",
+                                                                                "수정 실패");
+                                                                          }
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          25.0,
+                                                                      width:
+                                                                          77.0,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(
+                                                                              5),
+                                                                          color:
+                                                                              Color(0xFF656565)),
+                                                                      child: Center(
+                                                                          child: Text(
+                                                                        '수정',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      )),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ));
+                                                        },
                                                         child: Container(
                                                           height: 25,
                                                           decoration: BoxDecoration(
@@ -1458,7 +1625,170 @@ class _MainPageState extends State<MainPage> {
                                                     SizedBox(width: 10),
                                                     Expanded(
                                                       child: InkWell(
-                                                        onTap: () {},
+                                                        onTap: () {
+                                                          TextEditingController
+                                                              pointController =
+                                                              TextEditingController();
+                                                          pointController.text =
+                                                              detail[index]
+                                                                  .point;
+                                                          Get.defaultDialog(
+                                                              title: "고객 수정",
+                                                              content: Column(
+                                                                children: [
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "아이디 : ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'NanumSquareB',
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        detail[index]
+                                                                            .cus_id,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontFamily:
+                                                                              'NanumSquareR',
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "추천인코드 : ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'NanumSquareB',
+                                                                        ),
+                                                                      ),
+                                                                      Text(
+                                                                        detail[index]
+                                                                            .cus_recom,
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          fontFamily:
+                                                                              'NanumSquareR',
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  Row(
+                                                                    children: [
+                                                                      Text(
+                                                                        "포인트 : ",
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              14,
+                                                                          fontFamily:
+                                                                              'NanumSquareB',
+                                                                        ),
+                                                                      ),
+                                                                      Container(
+                                                                        width:
+                                                                            180,
+                                                                        margin: EdgeInsets.only(
+                                                                            right:
+                                                                                Get.width / 30),
+                                                                        child:
+                                                                            TextField(
+                                                                          controller:
+                                                                              pointController,
+                                                                          decoration: InputDecoration(
+                                                                              hintText: "0",
+                                                                              hintStyle: TextStyle(
+                                                                                fontSize: 12.0,
+                                                                                fontFamily: 'NanumSquareB',
+                                                                              ),
+                                                                              fillColor: Color(0xFF2A2D3E).withOpacity(0.1),
+                                                                              filled: true,
+                                                                              border: OutlineInputBorder(
+                                                                                borderSide: BorderSide.none,
+                                                                                borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                              ),
+                                                                              isDense: true,
+                                                                              contentPadding: EdgeInsets.all(8),
+                                                                              suffixText: "포인트"),
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12.0,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                      ),
+                                                                    ],
+                                                                  ),
+                                                                  SizedBox(
+                                                                    height: 10,
+                                                                  ),
+                                                                  InkWell(
+                                                                    onTap: () {
+                                                                      Customer_Data.updatePoint(
+                                                                              detail[index].cus_id,
+                                                                              pointController.text)
+                                                                          .then((value) {
+                                                                        if (value) {
+                                                                          setState(
+                                                                              () {
+                                                                            detail[index].point =
+                                                                                pointController.text;
+                                                                          });
+                                                                          Get.back();
+                                                                          Get.snackbar(
+                                                                              "성공",
+                                                                              "고객 정보를 성공적으로 수정했습니다");
+                                                                        } else {
+                                                                          if (!Get
+                                                                              .isSnackbarOpen) {
+                                                                            Get.snackbar("실패",
+                                                                                "수정 실패");
+                                                                          }
+                                                                        }
+                                                                      });
+                                                                    },
+                                                                    child:
+                                                                        Container(
+                                                                      height:
+                                                                          25.0,
+                                                                      width:
+                                                                          77.0,
+                                                                      decoration: BoxDecoration(
+                                                                          borderRadius: BorderRadius.circular(
+                                                                              5),
+                                                                          color:
+                                                                              Color(0xFF656565)),
+                                                                      child: Center(
+                                                                          child: Text(
+                                                                        '수정',
+                                                                        style:
+                                                                            TextStyle(
+                                                                          fontSize:
+                                                                              12,
+                                                                          color:
+                                                                              Colors.white,
+                                                                        ),
+                                                                      )),
+                                                                    ),
+                                                                  ),
+                                                                ],
+                                                              ));
+                                                        },
                                                         child: Container(
                                                           height: 25,
                                                           decoration: BoxDecoration(
@@ -1950,7 +2280,8 @@ class _MainPageState extends State<MainPage> {
                                       EdgeInsets.only(right: Get.width * 0.1),
                                   child: TextField(
                                     controller: searchController,
-                                    onSubmitted: (text) { //검색
+                                    onSubmitted: (text) {
+                                      //검색
                                       searchResult = [];
                                       print(text);
                                       searchResult.addAll(detail.where(
@@ -1975,7 +2306,8 @@ class _MainPageState extends State<MainPage> {
                                             Radius.circular(10)),
                                       ),
                                       suffixIcon: InkWell(
-                                        onTap: () { //검색
+                                        onTap: () {
+                                          //검색
                                           searchResult = [];
                                           print(searchController.text);
                                           searchResult.addAll(detail.where(
@@ -2301,7 +2633,7 @@ class _MainPageState extends State<MainPage> {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                      '$index',
+                                                      '${index + 1}',
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontFamily:
@@ -2543,7 +2875,164 @@ class _MainPageState extends State<MainPage> {
                                                         ),
                                                         SizedBox(width: 10),
                                                         InkWell(
-                                                          onTap: () {},
+                                                          onTap: () {
+                                                            TextEditingController
+                                                                pointController =
+                                                                TextEditingController();
+                                                            pointController
+                                                                    .text =
+                                                                searchResult[
+                                                                        index]
+                                                                    .point;
+                                                            Get.defaultDialog(
+                                                                title: "고객 수정",
+                                                                content: Column(
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "아이디 : ",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          searchResult[index]
+                                                                              .cus_id,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontFamily:
+                                                                                'NanumSquareR',
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "추천인코드 : ",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          searchResult[index]
+                                                                              .cus_recom,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontFamily:
+                                                                                'NanumSquareR',
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "포인트 : ",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          width:
+                                                                              180,
+                                                                          margin:
+                                                                              EdgeInsets.only(right: Get.width / 30),
+                                                                          child:
+                                                                              TextField(
+                                                                            controller:
+                                                                                pointController,
+                                                                            decoration: InputDecoration(
+                                                                                hintText: "0",
+                                                                                hintStyle: TextStyle(
+                                                                                  fontSize: 12.0,
+                                                                                  fontFamily: 'NanumSquareB',
+                                                                                ),
+                                                                                fillColor: Color(0xFF2A2D3E).withOpacity(0.1),
+                                                                                filled: true,
+                                                                                border: OutlineInputBorder(
+                                                                                  borderSide: BorderSide.none,
+                                                                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                                ),
+                                                                                isDense: true,
+                                                                                contentPadding: EdgeInsets.all(8),
+                                                                                suffixText: "포인트"),
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 12.0,
+                                                                              fontFamily: 'NanumSquareB',
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        Customer_Data.updatePoint(searchResult[index].cus_id,
+                                                                                pointController.text)
+                                                                            .then((value) {
+                                                                          if (value) {
+                                                                            setState(() {
+                                                                              searchResult[index].point = pointController.text;
+                                                                            });
+                                                                            Get.back();
+                                                                            Get.snackbar("성공",
+                                                                                "고객 정보를 성공적으로 수정했습니다");
+                                                                          } else {
+                                                                            if (!Get.isSnackbarOpen) {
+                                                                              Get.snackbar("실패", "수정 실패");
+                                                                            }
+                                                                          }
+                                                                        });
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        height:
+                                                                            25.0,
+                                                                        width:
+                                                                            77.0,
+                                                                        decoration: BoxDecoration(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5),
+                                                                            color: Color(0xFF656565)),
+                                                                        child: Center(
+                                                                            child: Text(
+                                                                          '수정',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            color:
+                                                                                Colors.white,
+                                                                          ),
+                                                                        )),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ));
+                                                          },
                                                           child: Container(
                                                             height: 25.0,
                                                             width: 77.0,
@@ -2612,7 +3101,7 @@ class _MainPageState extends State<MainPage> {
                                                   ),
                                                   child: Center(
                                                     child: Text(
-                                                      '$index',
+                                                      '${index + 1}',
                                                       style: TextStyle(
                                                         fontSize: 12,
                                                         fontFamily:
@@ -2827,7 +3316,117 @@ class _MainPageState extends State<MainPage> {
                                                           width: 10.0,
                                                         ),
                                                         InkWell(
-                                                          onTap: () {},
+                                                          onTap: () {
+                                                            Get.defaultDialog(
+                                                                title:
+                                                                    "고객 정보 삭제",
+                                                                titleStyle:
+                                                                    TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontFamily:
+                                                                      'NanumSquareB',
+                                                                ),
+                                                                content: Column(
+                                                                  children: [
+                                                                    Text(
+                                                                      "아이디 : ${detail[index].cus_id}",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            14,
+                                                                        fontFamily:
+                                                                            'NanumSquareB',
+                                                                      ),
+                                                                    ),
+                                                                    Text(
+                                                                      "고객 정보를 삭제하시겠습니까?",
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        fontFamily:
+                                                                            'NanumSquareR',
+                                                                      ),
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    Row(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .center,
+                                                                      children: [
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            Get.back();
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                25.0,
+                                                                            width:
+                                                                                77.0,
+                                                                            decoration:
+                                                                                BoxDecoration(borderRadius: BorderRadius.circular(5), color: Color(0xFF656565)),
+                                                                            child: Center(
+                                                                                child: Text(
+                                                                              '취소',
+                                                                              style: TextStyle(
+                                                                                fontSize: 12,
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            )),
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(
+                                                                          width:
+                                                                              10,
+                                                                        ),
+                                                                        InkWell(
+                                                                          onTap:
+                                                                              () {
+                                                                            Customer_Data.deleteCus(detail[index].cus_id).then((value) {
+                                                                              if (value) {
+                                                                                setState(() {
+                                                                                  detail.removeAt(index);
+                                                                                });
+                                                                                Get.back();
+                                                                                Get.snackbar("성공", "고객 정보를 삭제했습니다");
+                                                                              } else {
+                                                                                if (!Get.isSnackbarOpen) {
+                                                                                  Get.snackbar("실패", "수정 실패");
+                                                                                }
+                                                                              }
+                                                                            });
+                                                                          },
+                                                                          child:
+                                                                              Container(
+                                                                            height:
+                                                                                25.0,
+                                                                            width:
+                                                                                77.0,
+                                                                            decoration:
+                                                                                BoxDecoration(
+                                                                              borderRadius: BorderRadius.circular(5),
+                                                                              color: const Color(0xffF04C57),
+                                                                            ),
+                                                                            child: Center(
+                                                                                child: Text(
+                                                                              '삭제',
+                                                                              style: TextStyle(
+                                                                                fontSize: 12,
+                                                                                color: Colors.white,
+                                                                              ),
+                                                                            )),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    )
+                                                                  ],
+                                                                ));
+                                                          },
                                                           child: Container(
                                                             height: 25.0,
                                                             width: 77.0,
@@ -2851,7 +3450,169 @@ class _MainPageState extends State<MainPage> {
                                                         ),
                                                         SizedBox(width: 10),
                                                         InkWell(
-                                                          onTap: () {},
+                                                          onTap: () {
+                                                            TextEditingController
+                                                                pointController =
+                                                                TextEditingController();
+                                                            pointController
+                                                                    .text =
+                                                                detail[index]
+                                                                    .point;
+                                                            Get.defaultDialog(
+                                                                title: "고객 수정",
+                                                                titleStyle:
+                                                                    TextStyle(
+                                                                  fontSize: 14,
+                                                                  fontFamily:
+                                                                      'NanumSquareB',
+                                                                ),
+                                                                content: Column(
+                                                                  children: [
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "아이디 : ",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          detail[index]
+                                                                              .cus_id,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontFamily:
+                                                                                'NanumSquareR',
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "추천인코드 : ",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                        Text(
+                                                                          detail[index]
+                                                                              .cus_recom,
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            fontFamily:
+                                                                                'NanumSquareR',
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    Row(
+                                                                      children: [
+                                                                        Text(
+                                                                          "포인트 : ",
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                14,
+                                                                            fontFamily:
+                                                                                'NanumSquareB',
+                                                                          ),
+                                                                        ),
+                                                                        Container(
+                                                                          width:
+                                                                              180,
+                                                                          margin:
+                                                                              EdgeInsets.only(right: Get.width / 30),
+                                                                          child:
+                                                                              TextField(
+                                                                            controller:
+                                                                                pointController,
+                                                                            decoration: InputDecoration(
+                                                                                hintText: "0",
+                                                                                hintStyle: TextStyle(
+                                                                                  fontSize: 12.0,
+                                                                                  fontFamily: 'NanumSquareB',
+                                                                                ),
+                                                                                fillColor: Color(0xFF2A2D3E).withOpacity(0.1),
+                                                                                filled: true,
+                                                                                border: OutlineInputBorder(
+                                                                                  borderSide: BorderSide.none,
+                                                                                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                                                                                ),
+                                                                                isDense: true,
+                                                                                contentPadding: EdgeInsets.all(8),
+                                                                                suffixText: "포인트"),
+                                                                            style:
+                                                                                TextStyle(
+                                                                              fontSize: 12.0,
+                                                                              fontFamily: 'NanumSquareB',
+                                                                            ),
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                    SizedBox(
+                                                                      height:
+                                                                          10,
+                                                                    ),
+                                                                    InkWell(
+                                                                      onTap:
+                                                                          () {
+                                                                        Customer_Data.updatePoint(detail[index].cus_id,
+                                                                                pointController.text)
+                                                                            .then((value) {
+                                                                          if (value) {
+                                                                            setState(() {
+                                                                              detail[index].point = pointController.text;
+                                                                            });
+                                                                            Get.back();
+                                                                            Get.snackbar("성공",
+                                                                                "고객 정보를 성공적으로 수정했습니다");
+                                                                          } else {
+                                                                            if (!Get.isSnackbarOpen) {
+                                                                              Get.snackbar("실패", "수정 실패");
+                                                                            }
+                                                                          }
+                                                                        });
+                                                                      },
+                                                                      child:
+                                                                          Container(
+                                                                        height:
+                                                                            25.0,
+                                                                        width:
+                                                                            77.0,
+                                                                        decoration: BoxDecoration(
+                                                                            borderRadius:
+                                                                                BorderRadius.circular(5),
+                                                                            color: Color(0xFF656565)),
+                                                                        child: Center(
+                                                                            child: Text(
+                                                                          '수정',
+                                                                          style:
+                                                                              TextStyle(
+                                                                            fontSize:
+                                                                                12,
+                                                                            color:
+                                                                                Colors.white,
+                                                                          ),
+                                                                        )),
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                ));
+                                                          },
                                                           child: Container(
                                                             height: 25.0,
                                                             width: 77.0,

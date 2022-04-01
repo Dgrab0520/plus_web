@@ -28,6 +28,11 @@ class _PartnerPageState extends State<PartnerPage> {
   String strYear = '';
   String strMonth = '';
 
+  List<Pro_Detail> searchResult = [];
+  bool isSearch = false;
+
+  TextEditingController searchController = TextEditingController();
+
   getSummary() {
     Pro_Data.getSummary().then((value) {
       setState(() {
@@ -1088,6 +1093,18 @@ class _PartnerPageState extends State<PartnerPage> {
                                   margin:
                                       EdgeInsets.only(right: Get.width / 30),
                                   child: TextField(
+                                    controller: searchController,
+                                    onSubmitted: (text) {
+                                      //검색
+                                      searchResult = [];
+                                      print(text);
+                                      searchResult.addAll(detail.where(
+                                          (element) =>
+                                              element.com_name.contains(text)));
+                                      setState(() {
+                                        isSearch = true;
+                                      });
+                                    },
                                     decoration: InputDecoration(
                                       hintText: "Search",
                                       hintStyle: TextStyle(
@@ -1103,7 +1120,19 @@ class _PartnerPageState extends State<PartnerPage> {
                                             Radius.circular(10)),
                                       ),
                                       suffixIcon: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          //검색
+                                          searchResult = [];
+                                          print(searchController.text);
+                                          searchResult.addAll(detail.where(
+                                              (element) => element.com_name
+                                                  .contains(
+                                                      searchController.text)));
+                                          print(searchResult);
+                                          setState(() {
+                                            isSearch = true;
+                                          });
+                                        },
                                         child: Container(
                                           width: 35.0,
                                           height: 35.0,
@@ -1428,359 +1457,739 @@ class _PartnerPageState extends State<PartnerPage> {
                                             MediaQuery.of(context).size.width /
                                                 30,
                                       ),
-                                      child: ListView.builder(
-                                          itemCount: detail.length,
-                                          itemBuilder: (_, int index) {
-                                            return Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        left: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${index + 1}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].pro_id}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].pro_phone}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].com_name}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].com_no}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        detail[index].index ==
-                                                                'alli'
-                                                            ? '제휴 파트너'
-                                                            : '-',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].register_date}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 10.0,
-                                                          ),
-                                                          Expanded(
-                                                            child: InkWell(
-                                                              onTap: () {},
-                                                              child: Container(
-                                                                height: 25,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                5),
-                                                                    color: Color(
-                                                                        0xFF656565)),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  '삭제',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                )),
-                                                              ),
+                                      child: isSearch
+                                          ? ListView.builder(
+                                              itemCount: searchResult.length,
+                                              itemBuilder: (_, int index) {
+                                                return Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            left: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
                                                             ),
                                                           ),
-                                                          SizedBox(width: 10),
-                                                          Expanded(
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                selectPro(
-                                                                    '${detail[index].pro_id}');
-                                                              },
-                                                              child: Container(
-                                                                height: 25,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                5),
-                                                                    color: Color(
-                                                                        0xFF656565)),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  '상세',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                )),
-                                                              ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${index + 1}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
                                                             ),
                                                           ),
-                                                          SizedBox(
-                                                            width: 10.0,
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          })))
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .pro_id,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .pro_phone,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .com_name,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .com_no,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                        .index ==
+                                                                    'alli'
+                                                                ? '제휴 파트너'
+                                                                : '-',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .register_date,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {},
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '삭제',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 10),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {
+                                                                    selectPro(searchResult[
+                                                                            index]
+                                                                        .pro_id);
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '상세',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              })
+                                          : ListView.builder(
+                                              itemCount: detail.length,
+                                              itemBuilder: (_, int index) {
+                                                return Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            left: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${index + 1}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].pro_id}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].pro_phone}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].com_name}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].com_no}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            detail[index]
+                                                                        .index ==
+                                                                    'alli'
+                                                                ? '제휴 파트너'
+                                                                : '-',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].register_date}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {},
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '삭제',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 10),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {
+                                                                    selectPro(
+                                                                        '${detail[index].pro_id}');
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '상세',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              })))
                               : Container(),
 
                           SizedBox(height: 40.0)
@@ -2236,6 +2645,18 @@ class _PartnerPageState extends State<PartnerPage> {
                                   margin:
                                       EdgeInsets.only(right: Get.width * 0.1),
                                   child: TextField(
+                                    controller: searchController,
+                                    onSubmitted: (text) {
+                                      //검색
+                                      searchResult = [];
+                                      print(text);
+                                      searchResult.addAll(detail.where(
+                                          (element) =>
+                                              element.com_name.contains(text)));
+                                      setState(() {
+                                        isSearch = true;
+                                      });
+                                    },
                                     decoration: InputDecoration(
                                       hintText: "Search",
                                       hintStyle: TextStyle(
@@ -2251,7 +2672,19 @@ class _PartnerPageState extends State<PartnerPage> {
                                             Radius.circular(10)),
                                       ),
                                       suffixIcon: InkWell(
-                                        onTap: () {},
+                                        onTap: () {
+                                          //검색
+                                          searchResult = [];
+                                          print(searchController.text);
+                                          searchResult.addAll(detail.where(
+                                              (element) => element.com_name
+                                                  .contains(
+                                                      searchController.text)));
+                                          print(searchResult);
+                                          setState(() {
+                                            isSearch = true;
+                                          });
+                                        },
                                         child: Container(
                                           width: 35.0,
                                           height: 35.0,
@@ -2568,359 +3001,739 @@ class _PartnerPageState extends State<PartnerPage> {
                                   child: Padding(
                                       padding: EdgeInsets.symmetric(
                                           horizontal: Get.width * 0.1),
-                                      child: ListView.builder(
-                                          itemCount: detail.length,
-                                          itemBuilder: (_, int index) {
-                                            return Row(
-                                              children: [
-                                                Expanded(
-                                                  flex: 1,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        left: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${index + 1}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].pro_id}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].pro_phone}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].com_name}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].com_no}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        detail[index].index ==
-                                                                'alli'
-                                                            ? '제휴 파트너'
-                                                            : '-',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Text(
-                                                        '${detail[index].register_date}',
-                                                        style: TextStyle(
-                                                          fontSize: 12,
-                                                          fontFamily:
-                                                              'NanumSquareR',
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  flex: 2,
-                                                  child: Container(
-                                                    width: 120,
-                                                    height: 40,
-                                                    decoration: BoxDecoration(
-                                                      color: Colors.white,
-                                                      border: Border(
-                                                        right: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                        bottom: BorderSide(
-                                                          // POINT
-                                                          color:
-                                                              Color(0xFFcccccc),
-                                                          width: 1.0,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    child: Center(
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .center,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .center,
-                                                        children: [
-                                                          SizedBox(
-                                                            width: 10.0,
-                                                          ),
-                                                          Expanded(
-                                                            child: InkWell(
-                                                              onTap: () {},
-                                                              child: Container(
-                                                                height: 25,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                5),
-                                                                    color: Color(
-                                                                        0xFF656565)),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  '삭제',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                )),
-                                                              ),
+                                      child: isSearch
+                                          ? ListView.builder(
+                                              itemCount: searchResult.length,
+                                              itemBuilder: (_, int index) {
+                                                return Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            left: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
                                                             ),
                                                           ),
-                                                          SizedBox(width: 10),
-                                                          Expanded(
-                                                            child: InkWell(
-                                                              onTap: () {
-                                                                selectPro(
-                                                                    '${detail[index].pro_id}');
-                                                              },
-                                                              child: Container(
-                                                                height: 25,
-                                                                decoration: BoxDecoration(
-                                                                    borderRadius:
-                                                                        BorderRadius
-                                                                            .circular(
-                                                                                5),
-                                                                    color: Color(
-                                                                        0xFF656565)),
-                                                                child: Center(
-                                                                    child: Text(
-                                                                  '상세',
-                                                                  style:
-                                                                      TextStyle(
-                                                                    fontSize:
-                                                                        12,
-                                                                    color: Colors
-                                                                        .white,
-                                                                  ),
-                                                                )),
-                                                              ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${index + 1}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
                                                             ),
                                                           ),
-                                                          SizedBox(
-                                                            width: 10.0,
-                                                          ),
-                                                        ],
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                ),
-                                              ],
-                                            );
-                                          })))
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .pro_id,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .pro_phone,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .com_name,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .com_no,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                        .index ==
+                                                                    'alli'
+                                                                ? '제휴 파트너'
+                                                                : '-',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            searchResult[index]
+                                                                .register_date,
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {},
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '삭제',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 10),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {
+                                                                    selectPro(searchResult[
+                                                                            index]
+                                                                        .pro_id);
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '상세',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              })
+                                          : ListView.builder(
+                                              itemCount: detail.length,
+                                              itemBuilder: (_, int index) {
+                                                return Row(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 1,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            left: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${index + 1}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].pro_id}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].pro_phone}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].com_name}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].com_no}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            detail[index]
+                                                                        .index ==
+                                                                    'alli'
+                                                                ? '제휴 파트너'
+                                                                : '-',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Text(
+                                                            '${detail[index].register_date}',
+                                                            style: TextStyle(
+                                                              fontSize: 12,
+                                                              fontFamily:
+                                                                  'NanumSquareR',
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                    Expanded(
+                                                      flex: 2,
+                                                      child: Container(
+                                                        width: 120,
+                                                        height: 40,
+                                                        decoration:
+                                                            BoxDecoration(
+                                                          color: Colors.white,
+                                                          border: Border(
+                                                            right: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                            bottom: BorderSide(
+                                                              // POINT
+                                                              color: Color(
+                                                                  0xFFcccccc),
+                                                              width: 1.0,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        child: Center(
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .center,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .center,
+                                                            children: [
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {},
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '삭제',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                  width: 10),
+                                                              Expanded(
+                                                                child: InkWell(
+                                                                  onTap: () {
+                                                                    selectPro(
+                                                                        '${detail[index].pro_id}');
+                                                                  },
+                                                                  child:
+                                                                      Container(
+                                                                    height: 25,
+                                                                    decoration: BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(
+                                                                                5),
+                                                                        color: Color(
+                                                                            0xFF656565)),
+                                                                    child: Center(
+                                                                        child: Text(
+                                                                      '상세',
+                                                                      style:
+                                                                          TextStyle(
+                                                                        fontSize:
+                                                                            12,
+                                                                        color: Colors
+                                                                            .white,
+                                                                      ),
+                                                                    )),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                              SizedBox(
+                                                                width: 10.0,
+                                                              ),
+                                                            ],
+                                                          ),
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ],
+                                                );
+                                              })))
                               : Container(),
 
                           SizedBox(height: 10.0)
