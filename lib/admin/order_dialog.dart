@@ -160,7 +160,7 @@ class OrderDialog extends StatelessWidget {
                         alignment: Alignment.center,
                         padding: const EdgeInsets.all(5),
                         child: const Text(
-                          "예상 견적 요청 날짜",
+                          "견적 요청 일",
                           style: TextStyle(
                             fontSize: 14,
                             fontFamily: 'NanumSquareB',

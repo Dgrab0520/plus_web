@@ -11,6 +11,10 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+
+  TextEditingController idController = TextEditingController();
+  TextEditingController pwController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,6 +74,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 60,
                       padding: EdgeInsets.only(top: 10.0),
                       child: TextField(
+                        controller: idController,
                         autocorrect: true,
                         maxLength: 20,
                         keyboardType: TextInputType.number,
@@ -111,6 +116,7 @@ class _LoginPageState extends State<LoginPage> {
                       height: 60,
                       padding: EdgeInsets.only(top: 10.0),
                       child: TextField(
+                        controller: pwController,
                         maxLength: 15,
                         decoration: InputDecoration(
                           counterText: "",
@@ -156,7 +162,9 @@ class _LoginPageState extends State<LoginPage> {
                     SizedBox(height: 30),
                     InkWell(
                       onTap: () {
-                        Get.to(MainPage());
+                        // Get.to(MainPage());
+                        idController.text == 'no2000chs@naver.com' && pwController.text == 'Kshm2850502282' ?
+                        Get.to(MainPage()) : Get.snackbar('로그인 실패', '아이디 또는 비밀번호를 확인해주세요', backgroundColor: Colors.white);
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
