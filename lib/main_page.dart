@@ -1131,7 +1131,7 @@ class _MainPageState extends State<MainPage> {
   void _launchURL() async {
     //다운로드 버튼
     String _url =
-        "https://play.google.com/store/apps/details?id=com.dgrab.flutter_fluencer";
+        "https://play.google.com/store/apps/details?id=com.dgrab.movingPlus";
     if (!await launch(_url)) throw 'Could not launch $_url';
   }
 }
