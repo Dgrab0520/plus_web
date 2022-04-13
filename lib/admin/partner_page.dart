@@ -499,14 +499,134 @@ class _PartnerPageState extends State<PartnerPage> {
                               )),
                           Expanded(
                               flex: 6,
-                              child: Text(
-                                detail2[0].index == 'alli'
-                                    ? '|  재휴 파트너'
-                                    : '|  일반 파트너',
-                                style: TextStyle(
-                                  fontSize: 13.0,
-                                  fontFamily: 'NanumSquareR',
-                                ),
+                              child: Row(
+                                children: [
+                                  Text(
+                                    detail2[0].index == 'alli'
+                                        ? '|  제휴 파트너'
+                                        : '|  일반 파트너',
+                                    style: TextStyle(
+                                      fontSize: 13.0,
+                                      fontFamily: 'NanumSquareR',
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  InkWell(
+                                    onTap: () {
+                                      Get.defaultDialog(
+                                        title: "파트너 전환",
+                                        content: Column(
+                                          children: [
+                                            Text(
+                                              "${detail2[0].com_name} 을(를) ",
+                                              style: TextStyle(
+                                                fontFamily: 'NanumSquareR',
+                                              ),
+                                            ),
+                                            Text(
+                                              (detail2[0].index == 'alli'
+                                                      ? '[제휴 파트너]'
+                                                      : '[일반 파트너]') +
+                                                  "에서 " +
+                                                  (detail2[0].index == 'alli'
+                                                      ? '[일반 파트너]'
+                                                      : '[제휴 파트너]') +
+                                                  "으로",
+                                              style: TextStyle(
+                                                fontFamily: 'NanumSquareR',
+                                              ),
+                                            ),
+                                            Text(
+                                              "전환하시겠습니까?",
+                                              style: TextStyle(
+                                                fontFamily: 'NanumSquareR',
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 20,
+                                            ),
+                                          ],
+                                        ),
+                                        confirm: InkWell(
+                                          onTap: () {
+                                            Get.back();
+                                          },
+                                          child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 3),
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  border: Border.all(
+                                                    color: Color(0xff506AB4),
+                                                  ),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                              child: Center(
+                                                  child: Text(
+                                                '아니오',
+                                                style: TextStyle(
+                                                  fontSize: 14.0,
+                                                  color: Color(0xff506AB4),
+                                                  fontFamily: 'NanumSquareR',
+                                                ),
+                                              ))),
+                                        ),
+                                        cancel: InkWell(
+                                          onTap: () {
+                                            Pro_Data.updateAlliance(
+                                                    detail2[0].pro_id,
+                                                    detail2[0].index == 'alli'
+                                                        ? 'best'
+                                                        : 'alli')
+                                                .then((value) {
+                                              if (value) {
+                                                Get.offAll(PartnerPage());
+                                              }
+                                            });
+                                          },
+                                          child: Container(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
+                                                      horizontal: 5,
+                                                      vertical: 3),
+                                              decoration: BoxDecoration(
+                                                  color: Color(0xff506AB4),
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          5.0)),
+                                              child: Center(
+                                                  child: Text(
+                                                '네',
+                                                style: TextStyle(
+                                                  fontSize: 14.0,
+                                                  color: Colors.white,
+                                                  fontFamily: 'NanumSquareR',
+                                                ),
+                                              ))),
+                                        ),
+                                      );
+                                    },
+                                    child: Container(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 3),
+                                        decoration: BoxDecoration(
+                                            color: Color(0xff506AB4),
+                                            borderRadius:
+                                                BorderRadius.circular(5.0)),
+                                        child: Center(
+                                            child: Text(
+                                          '파트너 전환',
+                                          style: TextStyle(
+                                              fontSize: 10.0,
+                                              color: Colors.white),
+                                        ))),
+                                  )
+                                ],
                               )),
                         ],
                       ),
