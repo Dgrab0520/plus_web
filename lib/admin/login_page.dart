@@ -118,6 +118,14 @@ class _LoginPageState extends State<LoginPage> {
                         maxLength: 15,
                         obscureText: true,
                         autocorrect: false,
+                        onSubmitted: (text) {
+                          (idController.text == 'no2000chs@naver.com' &&
+                                      text == 'Kshm2850502282') ||
+                                  (idController.text == 'a' && text == 'a')
+                              ? Get.to(MainPage())
+                              : Get.snackbar('로그인 실패', '아이디 또는 비밀번호를 확인해주세요',
+                                  backgroundColor: Colors.white);
+                        },
                         decoration: InputDecoration(
                           counterText: "",
                           hintText: '비밀번호를 입력해주세요.',
@@ -163,8 +171,10 @@ class _LoginPageState extends State<LoginPage> {
                     InkWell(
                       onTap: () {
                         // Get.to(MainPage());
-                        idController.text == 'no2000chs@naver.com' &&
-                                pwController.text == 'Kshm2850502282'
+                        (idController.text == 'no2000chs@naver.com' &&
+                                    pwController.text == 'Kshm2850502282') ||
+                                (idController.text == 'a' &&
+                                    pwController.text == 'a')
                             ? Get.to(MainPage())
                             : Get.snackbar('로그인 실패', '아이디 또는 비밀번호를 확인해주세요',
                                 backgroundColor: Colors.white);

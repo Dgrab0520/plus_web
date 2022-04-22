@@ -11,6 +11,7 @@ import 'package:plus_web/admin/partner_page.dart';
 import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'main_page.dart';
+import 'notice_dialog.dart';
 
 class MemberData {
   MemberData(this.type, this.count);
@@ -1303,46 +1304,51 @@ class _SettingPageState extends State<SettingPage> {
                   width: 10.0,
                 ),
                 Expanded(
-                  child: Container(
-                      padding: const EdgeInsets.all(5),
-                      width: 300,
-                      height: 350,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(5),
-                      ),
-                      child: Container(
-                        margin: const EdgeInsets.symmetric(
-                            vertical: 50.0, horizontal: 30.0),
+                  child: InkWell(
+                    onTap: () {
+                      Get.dialog(NoticeDialog());
+                    },
+                    child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: 300,
+                        height: 350,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            border: Border.all(
-                                width: 1.0, color: const Color(0xFFe6e6e6))),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            const Text('기타 설정',
-                                style: TextStyle(
-                                  fontSize: 17.0,
-                                  color: Colors.black,
-                                  fontFamily: 'NanumSquareEB',
-                                )),
-                            SizedBox(
-                              height: MediaQuery.of(context).size.width / 70,
-                            ),
-                            const Text(
-                              '기타 설정을 변경할 수 있습니다',
-                              style: TextStyle(
-                                fontSize: 15.0,
-                                color: Colors.grey,
-                                fontFamily: 'NanumSquareR',
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                          ],
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(5),
                         ),
-                      )),
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              vertical: 50.0, horizontal: 30.0),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              border: Border.all(
+                                  width: 1.0, color: const Color(0xFFe6e6e6))),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              const Text('기타 설정',
+                                  style: TextStyle(
+                                    fontSize: 17.0,
+                                    color: Colors.black,
+                                    fontFamily: 'NanumSquareEB',
+                                  )),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.width / 70,
+                              ),
+                              const Text(
+                                '기타 설정을 변경할 수 있습니다',
+                                style: TextStyle(
+                                  fontSize: 15.0,
+                                  color: Colors.grey,
+                                  fontFamily: 'NanumSquareR',
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        )),
+                  ),
                 ),
                 SizedBox(
                   width: MediaQuery.of(context).size.width / 30,
