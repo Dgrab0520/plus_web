@@ -38,6 +38,7 @@ class _BannerEditState extends State<BannerEdit> {
   @override
   void initState() {
     setState(() {
+      print('bannerss : ${widget.banners}');
       selectedImage = Container(
         height: 180,
         width: 320,

@@ -117,6 +117,7 @@ class _LoginPageState extends State<LoginPage> {
                       padding: EdgeInsets.only(top: 10.0),
                       child: TextField(
                         controller: pwController,
+                        obscureText: true,
                         maxLength: 15,
                         decoration: InputDecoration(
                           counterText: "",
