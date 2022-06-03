@@ -741,7 +741,7 @@ class _MainPageState extends State<MainPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   McCountingText(
-                    begin: 10,
+                    begin: 0,
                     end: downloadCount,
                     style: const TextStyle(
                         fontSize: 70,
@@ -1059,18 +1059,18 @@ class _MainPageState extends State<MainPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
-                  children: const [
+                  children: [
                     McCountingText(
-                      begin: 10,
-                      end: 1000,
-                      style: TextStyle(
+                      begin: 0,
+                      end: downloadCount,
+                      style: const TextStyle(
                           fontSize: 60,
                           fontFamily: 'Jalnan',
                           color: Color(0xFf025595)),
                       duration: Duration(seconds: 2),
                       curve: Curves.decelerate,
                     ),
-                    Text(
+                    const Text(
                       '+',
                       style: TextStyle(
                           color: Color(0xFF025595),
@@ -1131,7 +1131,7 @@ class _MainPageState extends State<MainPage> {
   void _launchURL() async {
     //다운로드 버튼
     String _url =
-        "https://play.google.com/store/apps/details?id=com.dgrab.flutter_fluencer";
+        "https://play.google.com/store/apps/details?id=com.dgrab.movingPlus";
     if (!await launch(_url)) throw 'Could not launch $_url';
   }
 }

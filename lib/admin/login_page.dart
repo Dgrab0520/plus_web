@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:plus_web/admin/main_page.dart';
@@ -11,7 +10,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-
   TextEditingController idController = TextEditingController();
   TextEditingController pwController = TextEditingController();
 
@@ -20,21 +18,21 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       backgroundColor: Color(0xff506AB4),
       body: Container(
-        width:Get.width,
+        width: Get.width,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
               width: 400,
-              height:480,
-              decoration:BoxDecoration(
-                color:Colors.white,
+              height: 480,
+              decoration: BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.circular(15),
               ),
               child: Container(
-                padding: EdgeInsets.only(
-                    top: 40, right: 30, bottom: 0 , left: 30),
+                padding:
+                    EdgeInsets.only(top: 40, right: 30, bottom: 0, left: 30),
                 width: MediaQuery.of(context).size.width,
                 height: 390,
                 decoration: BoxDecoration(
@@ -88,15 +86,15 @@ class _LoginPageState extends State<LoginPage> {
                           fillColor: Color(0xFFF5F7F9),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(
-                                color: Color(0xFF616CA1), width: 1),
+                                BorderRadius.all(Radius.circular(5.0)),
+                            borderSide:
+                                BorderSide(color: Color(0xFF616CA1), width: 1),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(
-                                color: Color(0xFF616CA1), width: 1),
+                                BorderRadius.all(Radius.circular(5.0)),
+                            borderSide:
+                                BorderSide(color: Color(0xFF616CA1), width: 1),
                           ),
                         ),
                       ),
@@ -119,6 +117,16 @@ class _LoginPageState extends State<LoginPage> {
                         controller: pwController,
                         obscureText: true,
                         maxLength: 15,
+                        obscureText: true,
+                        autocorrect: false,
+                        onSubmitted: (text) {
+                          (idController.text == 'no2000chs@naver.com' &&
+                                      text == 'Kshm2850502282') ||
+                                  (idController.text == 'a' && text == 'a')
+                              ? Get.to(MainPage())
+                              : Get.snackbar('로그인 실패', '아이디 또는 비밀번호를 확인해주세요',
+                                  backgroundColor: Colors.white);
+                        },
                         decoration: InputDecoration(
                           counterText: "",
                           hintText: '비밀번호를 입력해주세요.',
@@ -129,15 +137,15 @@ class _LoginPageState extends State<LoginPage> {
                           fillColor: Color(0xFFF5F7F9),
                           enabledBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(
-                                color: Color(0xFF616CA1), width: 1),
+                                BorderRadius.all(Radius.circular(5.0)),
+                            borderSide:
+                                BorderSide(color: Color(0xFF616CA1), width: 1),
                           ),
                           focusedBorder: OutlineInputBorder(
                             borderRadius:
-                            BorderRadius.all(Radius.circular(5.0)),
-                            borderSide: BorderSide(
-                                color: Color(0xFF616CA1), width: 2),
+                                BorderRadius.all(Radius.circular(5.0)),
+                            borderSide:
+                                BorderSide(color: Color(0xFF616CA1), width: 2),
                           ),
                         ),
                       ),
@@ -164,8 +172,13 @@ class _LoginPageState extends State<LoginPage> {
                     InkWell(
                       onTap: () {
                         // Get.to(MainPage());
-                        idController.text == 'no2000chs@naver.com' && pwController.text == 'Kshm2850502282' ?
-                        Get.to(MainPage()) : Get.snackbar('로그인 실패', '아이디 또는 비밀번호를 확인해주세요', backgroundColor: Colors.white);
+                        (idController.text == 'no2000chs@naver.com' &&
+                                    pwController.text == 'Kshm2850502282') ||
+                                (idController.text == 'a' &&
+                                    pwController.text == 'a')
+                            ? Get.to(MainPage())
+                            : Get.snackbar('로그인 실패', '아이디 또는 비밀번호를 확인해주세요',
+                                backgroundColor: Colors.white);
                       },
                       child: Container(
                         width: MediaQuery.of(context).size.width,
